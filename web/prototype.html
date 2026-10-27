@@ -1,0 +1,763 @@
+<title>소중한 내몸</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: 공공기관 데이터 리포트형 — 상단 출처·기준일 바, 넓은 화면은 본문+보조열, 모든 수치에 출처 표기 */
+:root{
+  --bg:#F4F6F9; --surface:#FFFFFF; --sunk:#EBEFF4; --line:#D6DDE6; --line-strong:#B7C2D0;
+  --ink:#121A26; --muted:#5A6676; --faint:#8592A3;
+  --navy:#1D3A6B; --navy-ink:#FFFFFF; --navy-soft:#E6ECF5;
+  --sig-high:#B4342B; --sig-high-soft:#FBE8E6;
+  --sig-mid:#9A6200; --sig-mid-soft:#FBF0D9;
+  --sig-low:#2D6A4F; --sig-low-soft:#E2F1E8;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:8px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E131A; --surface:#161D27; --sunk:#1D2632; --line:#2A3544; --line-strong:#3B4A5E;
+  --ink:#E6EBF2; --muted:#A1ADBD; --faint:#76849A;
+  --navy:#8FB0E8; --navy-ink:#0E131A; --navy-soft:#1C2A40;
+  --sig-high:#F08C82; --sig-high-soft:#3A1F1D;
+  --sig-mid:#E5B556; --sig-mid-soft:#352A14;
+  --sig-low:#7FCBA3; --sig-low-soft:#17302A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E131A; --surface:#161D27; --sunk:#1D2632; --line:#2A3544; --line-strong:#3B4A5E;
+  --ink:#E6EBF2; --muted:#A1ADBD; --faint:#76849A;
+  --navy:#8FB0E8; --navy-ink:#0E131A; --navy-soft:#1C2A40;
+  --sig-high:#F08C82; --sig-high-soft:#3A1F1D;
+  --sig-mid:#E5B556; --sig-mid-soft:#352A14;
+  --sig-low:#7FCBA3; --sig-low-soft:#17302A; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--navy)}
+:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance}
+
+/* header */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:20px;padding-block:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;text-align:left}
+.mark{width:32px;height:32px;border-radius:7px;background:var(--navy);display:grid;place-items:center;flex:none}
+.mark svg{width:18px;height:18px}
+.brand b{display:block;font-size:17px;letter-spacing:-.01em}
+.brand small{display:block;font-size:11px;color:var(--muted);line-height:1.2}
+nav.main{display:flex;gap:2px;flex-wrap:wrap}
+nav.main a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;padding:6px 10px;border-radius:6px}
+nav.main a[aria-current="page"]{color:var(--ink);background:var(--sunk)}
+.spacer{flex:1}
+.pass{font-size:12.5px;padding:6px 10px;border-radius:6px;background:var(--sunk);color:var(--muted);border:0}
+.pass.on{background:var(--sig-low-soft);color:var(--sig-low);font-weight:600}
+.srcbar{background:var(--navy-soft);color:var(--navy);font-size:12.5px}
+.srcbar .wrap{padding-block:7px;display:flex;gap:6px 16px;flex-wrap:wrap}
+.srcbar b{font-weight:600}
+
+.btn{border:1px solid var(--line-strong);background:var(--surface);padding:8px 14px;border-radius:6px;font-size:14px;font-weight:500}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:var(--navy-ink)}
+.btn.danger{background:var(--sig-high);border-color:var(--sig-high);color:var(--surface)}
+.btn.ghost{border-color:transparent;background:none;color:var(--muted)}
+.btn.sm{font-size:12.5px;padding:4px 10px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+main{padding-block:28px 56px;display:grid;gap:28px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--muted)}
+.hero{display:grid;gap:14px;max-width:760px}
+.hero h1{font-size:clamp(24px,3.2vw,32px);line-height:1.35;margin:0;letter-spacing:-.02em}
+.hero p{margin:0;color:var(--muted);max-width:62ch}
+.searchbox{display:flex;gap:8px;flex-wrap:wrap}
+.searchbox input{flex:1 1 260px;min-width:0}
+input[type=search],input[type=text],input[type=month],select,textarea{border:1px solid var(--line-strong);background:var(--surface);border-radius:6px;padding:9px 11px;width:100%}
+textarea{resize:vertical;min-height:90px}
+label.lbl{font-size:13px;font-weight:600;display:block;margin-bottom:4px}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tabs button{border:0;background:none;padding:8px 14px;font-size:14px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button[aria-pressed="true"]{color:var(--ink);font-weight:600;border-bottom-color:var(--navy)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);min-width:0}
+.card-h{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.card-h h2,.card-h h3{margin:0;font-size:16px}
+.card-h .src{margin-left:auto}
+.card-b{padding:6px 16px 14px}
+.src{font-size:11.5px;color:var(--faint)}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:960px){.grid3{grid-template-columns:minmax(0,1fr)}}
+.two{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+@media (max-width:960px){.two{grid-template-columns:minmax(0,1fr)}}
+
+/* ranking rows */
+.rank{list-style:none;margin:0;padding:0}
+.rank li{border-top:1px solid var(--line)}
+.rank li:first-child{border-top:0}
+.rank button{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;padding:10px 0}
+.rank .n{font-family:var(--f-num);color:var(--faint);font-size:13px}
+.rank .nm{font-weight:600;font-size:14.5px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank .mt{font-size:12px;color:var(--muted);display:block}
+.rank .v{font-family:var(--f-num);font-size:14px;font-weight:600;text-align:right}
+
+.sig{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;white-space:nowrap}
+.sig::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.sig.high{background:var(--sig-high-soft);color:var(--sig-high)}
+.sig.mid{background:var(--sig-mid-soft);color:var(--sig-mid)}
+.sig.low{background:var(--sig-low-soft);color:var(--sig-low)}
+.up{color:var(--sig-high)} .down{color:var(--sig-low)}
+
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font-size:12px;color:var(--muted);font-weight:600;background:var(--sunk)}
+td.r,th.r{text-align:right}
+tbody tr:last-child td{border-bottom:0}
+tr.click{cursor:pointer}
+tr.click:hover td{background:var(--sunk)}
+
+.disclaimer{font-size:12.5px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--navy);border-radius:4px;padding:12px 14px;display:grid;gap:4px}
+.disclaimer b{color:var(--ink)}
+
+/* detail */
+.dhead{display:grid;gap:6px;padding:18px 18px 16px}
+.dhead h1{margin:0;font-size:24px;letter-spacing:-.02em}
+.facts{display:flex;gap:6px 18px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.facts b{color:var(--ink);font-weight:600}
+.score{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:center;padding:16px 18px;border-top:1px solid var(--line)}
+.score .big{font-family:var(--f-num);font-size:44px;font-weight:600;line-height:1}
+.score .big small{font-size:16px;color:var(--faint)}
+.gauge{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--sig-low) 0 30%,var(--sig-mid) 30% 60%,var(--sig-high) 60% 100%);position:relative;opacity:.9;margin-top:8px}
+.gauge i{position:absolute;top:-4px;width:3px;height:16px;background:var(--ink);border-radius:2px;transform:translateX(-50%)}
+.gauge-l{display:flex;justify-content:space-between;font-size:11px;color:var(--faint);margin-top:4px}
+.comp{list-style:none;margin:0;padding:0}
+.comp li{border-top:1px solid var(--line);padding:12px 0;display:grid;gap:4px}
+.comp li:first-child{border-top:0}
+.comp .row1{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.comp .row1 b{font-size:14.5px}
+.comp .pts{margin-left:auto;font-family:var(--f-num);font-size:13px;color:var(--muted)}
+.minibar{height:5px;background:var(--sunk);border-radius:3px;overflow:hidden}
+.minibar i{display:block;height:100%;background:var(--navy)}
+.comp .ex{font-size:13px;color:var(--muted)}
+details.lim{font-size:12.5px;color:var(--muted)}
+details.lim summary{cursor:pointer;color:var(--navy);width:max-content}
+.spark{width:100%;height:84px;display:block}
+.case{border:1px solid var(--line);border-radius:6px;padding:10px 12px;font-size:13.5px;display:grid;gap:3px}
+.cases{display:grid;gap:8px}
+.tag{font-size:11.5px;font-weight:600}
+.tag.final{color:var(--sig-high)} .tag.pending{color:var(--sig-mid)} .tag.settled{color:var(--muted)}
+
+/* reviews */
+.rv{border-top:1px solid var(--line);padding-block:16px;display:grid;gap:8px}
+.rv:first-child{border-top:0}
+.rv-head{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.stars{color:var(--sig-high);letter-spacing:1px;font-size:13px}
+.badge{font-size:11.5px;padding:2px 7px;border-radius:4px;font-weight:600}
+.badge.ver{background:var(--sig-low-soft);color:var(--sig-low)}
+.badge.pend{background:var(--sig-mid-soft);color:var(--sig-mid)}
+.badge.plain{background:var(--sunk);color:var(--muted);font-weight:500}
+.rv-title{font-weight:700}
+.kw{display:flex;gap:6px;flex-wrap:wrap}
+.kw span{background:var(--sunk);color:var(--ink);font-size:12.5px;padding:2px 8px;border-radius:4px}
+.rv-body{position:relative;font-size:14.5px}
+.rv-body.locked p{filter:blur(5px);user-select:none;pointer-events:none}
+.unlock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.reply{background:var(--navy-soft);border-radius:6px;padding:10px 12px;font-size:13.5px;display:grid;gap:4px}
+.reply .who{font-size:12px;font-weight:600;color:var(--navy)}
+.reply.author{background:var(--sunk)}
+.reply.author .who{color:var(--muted)}
+.linkbtn{background:none;border:0;padding:0;color:var(--navy);font-size:12.5px;text-decoration:underline;justify-self:start}
+.rv-actions{display:flex;justify-content:flex-end;gap:6px}
+.empty{color:var(--muted);text-align:center;padding:32px 10px;font-size:14px}
+
+/* method */
+.prose{max-width:72ch;display:grid;gap:10px}
+.prose h2{font-size:20px;margin:8px 0 0}
+.prose p{margin:0}
+
+/* modal */
+.scrim{position:fixed;inset:0;background:rgba(8,12,18,.55);display:flex;align-items:flex-end;justify-content:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+@media (min-width:640px){.scrim{align-items:center}}
+.modal{background:var(--surface);border-radius:10px;width:100%;max-width:560px;max-height:100%;overflow:auto;padding:20px;display:grid;gap:14px}
+.modal h3{margin:0;font-size:19px}
+.plans{display:grid;gap:8px}
+.plan{border:1px solid var(--line-strong);border-radius:8px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;text-align:left;background:var(--surface);width:100%}
+.plan b{font-size:15px}
+.plan .price{font-family:var(--f-num);font-weight:600;grid-row:span 2}
+.plan .d{font-size:12.5px;color:var(--muted)}
+.plan.best{border-color:var(--navy);box-shadow:0 0 0 1px var(--navy)}
+.fine{font-size:12px;color:var(--muted);margin:0}
+.counter{font-size:12px;color:var(--muted);text-align:right;font-family:var(--f-num)}
+.counter.over{color:var(--sig-high);font-weight:600}
+.checks{display:grid;gap:6px;font-size:13.5px}
+.checks label{display:flex;gap:8px;align-items:flex-start}
+.checks input{margin-top:4px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:480px){.g2{grid-template-columns:1fr}}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line-strong);background:var(--surface);padding:4px 11px;border-radius:999px;font-size:13px}
+.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--navy-ink)}
+.alert{background:var(--sig-high-soft);color:var(--sig-high);font-size:13px;padding:8px 10px;border-radius:6px}
+.ad{background:var(--sunk);border-radius:8px;height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--muted)}
+.ad b{font-family:var(--f-num);font-size:36px;color:var(--ink)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:10px 16px;border-radius:6px;font-size:14px;z-index:30;max-width:calc(100% - 32px)}
+footer{border-top:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:12.5px}
+footer .wrap{padding-block:20px;display:grid;gap:6px}
+@media (prefers-reduced-motion:no-preference){.modal{animation:up .16s ease-out}@keyframes up{from{transform:translateY(8px);opacity:.6}}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <button class="brand" data-go="home" aria-label="소중한 내몸 홈">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="var(--navy-ink)" stroke-width="2.2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span>
+      <span><b>소중한 내몸</b><small>병원 공공데이터 · 인증 후기</small></span>
+    </button>
+    <nav class="main" aria-label="주요 메뉴">
+      <a href="#home" data-nav="home">홈</a>
+      <a href="#list" data-nav="list">병원 찾기</a>
+      <a href="#method" data-nav="method">지표 설명</a>
+      <a href="#admin" data-nav="admin">병원 관리자</a>
+    </nav>
+    <span class="spacer"></span>
+    <button class="pass" id="passChip">열람권 없음</button>
+    <button class="btn primary" id="writeBtn">후기 쓰기</button>
+  </div>
+</header>
+<div class="srcbar"><div class="wrap">
+  <span><b>실제 반영</b> 국민연금 가입 사업장 2026.09 · 심평원 병원정보·전문의·비급여(병원급) 2026.10 조회</span>
+  <span><b>준비 중</b> 의원급 비급여 · 판결(제보 후 검증) · 인증 후기</span>
+</div></div>
+
+<main class="wrap" id="view"></main>
+
+<footer><div class="wrap">
+  <div>모든 지표는 공공데이터를 바탕으로 한 자동 통계·추정이며, 의료기관의 진료 수준이나 경영 상태에 대한 단정적 평가가 아닙니다.</div>
+  <div>병원이 내는 어떤 비용도 지표·후기의 노출, 순위, 삭제에 영향을 주지 않습니다. 병원 반론과 데이터 정정 요청은 무료입니다.</div>
+  <div>MVP 프로토타입 · 서울 병원 목록과 직원 수·입퇴사는 국민연금공단(2026.09), 의사·전문의 수와 병원급 비급여 가격은 건강보험심사평가원(2026.10 조회) 공개 데이터입니다. ‘예시’로 표시된 가상 병원(A~H)의 가격·판결·후기·지수는 화면 시연용이며, 결제와 인증은 실제로 처리되지 않습니다.</div>
+</div></footer>
+
+<div id="modalRoot"></div>
+
+<script>
+/* ============================================================
+   데이터 모델 — 추후 웹 서비스 DB 테이블과 1:1 대응
+   hospitals(id, name, type['eye'|'dental'], region, opened, specialists, doctor_changes_3y)
+   staff_monthly(hospital_id, ym, headcount, joins, leaves)        ← 국민연금 가입 사업장
+   prices(hospital_id, item, price_manwon, ym)                     ← 심평원 비급여 진료비용
+   region_avg(region, item, price_manwon)                          ← 비급여 지역 평균(산출)
+   cases(id, hospital_id, court, case_no, status, summary)         ← 공개 판결문
+   reviews(id, hospital_id, item, rating, title, body, keywords[], procedure_month, verified, status)
+   replies(id, review_id, author_type['hospital'|'author'], summary≤50, body≤500)
+   reports(id, target_type['review'|'metric'], target_id, reason)
+   passes(user_id, type['ad'|'30d'|'life'], expires_at)
+   ============================================================ */
+const TYPE = {eye:"안과", dental:"치과"};
+const ITEMS = {eye:["라섹(양안)","라식(양안)","스마일라식(양안)"], dental:["임플란트(1개·국산)","치아교정(메탈)"]};
+const KEYWORDS = {
+  eye:["빛번짐","안구건조","혼탁(haze)","시력 퇴행","재수술","통증 지속","설명 부족","추가 비용"],
+  dental:["기간 연장","추가 비용","잇몸 퇴축","담당의 변경","장치 탈락","임플란트 주위염","감각 저하","보철 탈락","설명 부족"]
+};
+const REGION_AVG = {
+  "서울 강남구":{"라섹(양안)":152,"라식(양안)":138,"스마일라식(양안)":262,"임플란트(1개·국산)":118,"치아교정(메탈)":560},
+  "서울 서초구":{"라섹(양안)":148,"라식(양안)":135,"스마일라식(양안)":255,"임플란트(1개·국산)":115,"치아교정(메탈)":545},
+  "서울 송파구":{"라섹(양안)":140,"라식(양안)":128,"스마일라식(양안)":240,"임플란트(1개·국산)":105,"치아교정(메탈)":520},
+  "서울 마포구":{"라섹(양안)":138,"라식(양안)":126,"스마일라식(양안)":236,"임플란트(1개·국산)":102,"치아교정(메탈)":505},
+  "경기 성남시":{"라섹(양안)":132,"라식(양안)":120,"스마일라식(양안)":228,"임플란트(1개·국산)":98,"치아교정(메탈)":490}
+};
+// 12개월 인원 시계열 생성(예시)
+function series(start,deltas){let v=start;return deltas.map(d=>v+=d)}
+const DB = {
+  hospitals:[
+    {id:"h1",name:"A안과의원",type:"eye",region:"서울 강남구",opened:"2016-03",specialists:3,doctor_changes_3y:3,
+      staff:series(38,[0,-2,1,-3,2,-1,-2,3,-1,-2,1,0]),joins:22,leaves:24,
+      prices:{"라섹(양안)":189,"라식(양안)":165,"스마일라식(양안)":298}},
+    {id:"h2",name:"B안과의원",type:"eye",region:"서울 서초구",opened:"2011-09",specialists:5,doctor_changes_3y:1,
+      staff:series(52,[1,0,1,-1,0,1,0,0,1,-1,0,1]),joins:9,leaves:6,
+      prices:{"라섹(양안)":150,"라식(양안)":134,"스마일라식(양안)":259}},
+    {id:"h3",name:"C안과의원",type:"eye",region:"경기 성남시",opened:"2020-06",specialists:2,doctor_changes_3y:2,
+      staff:series(21,[-1,1,-2,1,0,-1,2,-2,1,0,-1,1]),joins:12,leaves:13,
+      prices:{"라섹(양안)":146,"라식(양안)":129,"스마일라식(양안)":239}},
+    {id:"h4",name:"D안과의원",type:"eye",region:"서울 마포구",opened:"2014-01",specialists:2,doctor_changes_3y:0,
+      staff:series(17,[0,0,0,1,0,0,-1,0,0,0,1,0]),joins:3,leaves:2,
+      prices:{"라섹(양안)":132,"라식(양안)":121,"스마일라식(양안)":231}},
+    {id:"h5",name:"E치과의원",type:"dental",region:"서울 송파구",opened:"2018-11",specialists:4,doctor_changes_3y:4,
+      staff:series(29,[-2,1,-1,2,-3,1,0,-2,2,-1,1,-1]),joins:19,leaves:22,
+      prices:{"임플란트(1개·국산)":109,"치아교정(메탈)":610}},
+    {id:"h6",name:"F치과의원",type:"dental",region:"서울 마포구",opened:"2019-04",specialists:2,doctor_changes_3y:1,
+      staff:series(14,[0,1,-1,0,0,1,-1,0,1,0,-1,0]),joins:5,leaves:5,
+      prices:{"임플란트(1개·국산)":129,"치아교정(메탈)":520}},
+    {id:"h7",name:"G치과의원",type:"dental",region:"서울 강남구",opened:"2012-07",specialists:6,doctor_changes_3y:1,
+      staff:series(41,[1,0,0,1,-1,0,1,0,0,-1,1,0]),joins:7,leaves:5,
+      prices:{"임플란트(1개·국산)":118,"치아교정(메탈)":575}},
+    {id:"h8",name:"H치과의원",type:"dental",region:"경기 성남시",opened:"2021-02",specialists:1,doctor_changes_3y:2,
+      staff:series(12,[-1,0,1,-1,0,-1,1,0,-1,1,0,0]),joins:8,leaves:9,
+      prices:{"임플란트(1개·국산)":92,"치아교정(메탈)":540}}
+  ],
+  reviews:[
+    {id:"r1",hospital_id:"h1",item:"라섹(양안)",rating:1,title:"수술 6개월째 야간 빛번짐이 그대로예요",body:"상담 때는 빛번짐이 보통 3개월 안에 줄어든다고 들었는데, 6개월이 지난 지금도 밤 운전이 어렵습니다. 정기검진에서는 수치상 정상이라 지켜보자는 말만 반복됐고, 동공 크기와의 관련성은 수술 전에 설명받지 못했습니다.",keywords:["빛번짐","설명 부족"],procedure_month:"2025-11",verified:true,status:"published"},
+    {id:"r2",hospital_id:"h1",item:"라섹(양안)",rating:2,title:"안구건조 관리비가 별도라는 걸 수술 후에 알았어요",body:"수술비에 사후관리가 포함된다고 안내받았는데, 인공눈물 외 건조증 시술(IPL)은 회당 별도 비용이었습니다. 계약서에는 적혀 있었지만 상담 때 따로 짚어주지 않아 아쉬웠습니다.",keywords:["안구건조","추가 비용"],procedure_month:"2025-06",verified:true,status:"published"},
+    {id:"r3",hospital_id:"h1",item:"라식(양안)",rating:2,title:"1년 반 만에 시력이 0.6까지 떨어졌습니다",body:"수술 직후 1.2까지 나왔다가 서서히 떨어져 지금은 0.6입니다. 재수술 가능 여부를 물었더니 각막 두께상 어렵다는 답을 받았습니다.",keywords:["시력 퇴행","재수술"],procedure_month:"2024-09",verified:false,status:"published"},
+    {id:"r12",hospital_id:"h1",item:"스마일라식(양안)",rating:4,title:"회복은 빨랐고 설명도 충분했어요",body:"다음 날 바로 출근할 수 있었고, 검진 일정도 문자로 잘 안내받았습니다. 대기 시간이 긴 건 아쉬웠습니다.",keywords:[],procedure_month:"2025-09",verified:true,status:"published"},
+    {id:"r4",hospital_id:"h2",item:"라섹(양안)",rating:1,title:"혼탁(haze)으로 3개월간 스테로이드 점안",body:"수술 후 한 달쯤 시야가 뿌옇게 변했고 혼탁 진단을 받았습니다. 자외선 차단 안내를 수술 후에야 들었습니다. 지금은 많이 나아졌지만 회복 기간 동안 업무에 지장이 컸습니다.",keywords:["혼탁(haze)","설명 부족"],procedure_month:"2025-03",verified:true,status:"published"},
+    {id:"r5",hospital_id:"h2",item:"라섹(양안)",rating:4,title:"통증은 길었지만 결과는 만족",body:"보통 3~4일이라 들었는데 일주일 가까이 통증이 이어졌습니다. 결과 시력은 만족합니다.",keywords:["통증 지속"],procedure_month:"2025-12",verified:true,status:"published"},
+    {id:"r6",hospital_id:"h3",item:"라섹(양안)",rating:2,title:"재검사 비용 안내가 달랐습니다",body:"상담 실장님과 원장님의 비용 안내가 달라 결국 재검사비를 추가로 냈습니다. 결과 자체는 무난합니다.",keywords:["추가 비용","설명 부족"],procedure_month:"2025-08",verified:false,status:"published"},
+    {id:"r7",hospital_id:"h5",item:"치아교정(메탈)",rating:1,title:"24개월 예정이 34개월째 진행 중",body:"처음 24개월 예상으로 시작했는데 중간에 담당 원장님이 두 번 바뀌면서 계획이 달라졌습니다. 기간 연장분 유지비를 월 단위로 따로 내고 있습니다.",keywords:["기간 연장","담당의 변경","추가 비용"],procedure_month:"2023-12",verified:true,status:"published"},
+    {id:"r8",hospital_id:"h5",item:"치아교정(메탈)",rating:2,title:"앞니 잇몸이 내려갔어요",body:"교정 1년 차부터 아랫니 잇몸이 내려가는 게 보였는데 정상 범위라는 답만 들었습니다. 다른 치과에서 잇몸 퇴축 소견을 받았습니다.",keywords:["잇몸 퇴축","설명 부족"],procedure_month:"2024-04",verified:true,status:"published"},
+    {id:"r9",hospital_id:"h6",item:"임플란트(1개·국산)",rating:1,title:"식립 후 아랫입술 감각이 6개월째 둔해요",body:"어금니 임플란트 식립 다음 날부터 아랫입술과 턱 일부 감각이 둔했습니다. 시간이 지나면 돌아온다고 했지만 6개월째 변화가 크지 않아 대학병원 진료를 예약했습니다.",keywords:["감각 저하","통증 지속"],procedure_month:"2025-04",verified:true,status:"published"},
+    {id:"r10",hospital_id:"h6",item:"임플란트(1개·국산)",rating:2,title:"보철이 1년 안에 두 번 빠졌습니다",body:"크라운이 두 번 탈락해 다시 붙였고, 두 번째부터는 재부착 비용을 받았습니다. 보증 범위를 처음에 문서로 받아두지 않은 게 후회됩니다.",keywords:["보철 탈락","추가 비용"],procedure_month:"2024-10",verified:false,status:"published"},
+    {id:"r11",hospital_id:"h8",item:"임플란트(1개·국산)",rating:2,title:"주위염으로 결국 재식립",body:"식립 2년 만에 임플란트 주위염이 와서 제거 후 재식립했습니다. 정기검진 안내가 따로 없었고, 재식립 비용은 절반만 지원받았습니다.",keywords:["임플란트 주위염","재수술","추가 비용"],procedure_month:"2023-05",verified:true,status:"published"},
+    {id:"r13",hospital_id:"h7",item:"임플란트(1개·국산)",rating:5,title:"보증 기간을 문서로 받아서 안심됐어요",body:"수술 전 보증 범위와 재방문 일정을 문서로 받았고, 식립 후 통증도 크지 않았습니다.",keywords:[],procedure_month:"2025-07",verified:true,status:"published"}
+  ],
+  replies:[
+    {id:"p1",review_id:"r1",author_type:"hospital",summary:"불편을 드려 죄송합니다. 야간 시력 정밀검사를 무상으로 다시 안내드리겠습니다.",body:"불편을 드려 죄송합니다. 수술 전 검사 기록상 수술 적합 범위였으나, 빛번짐 가능성에 대한 설명이 충분히 전달되지 않았다면 개선하겠습니다. 야간 시력 정밀검사를 무상으로 다시 안내드리겠으니 대표번호로 연락 부탁드립니다."},
+    {id:"p2",review_id:"r1",author_type:"author",summary:"재검사 안내 받았습니다. 결과 나오면 추가하겠습니다.",body:"재검사 안내 받았습니다. 결과 나오면 추가하겠습니다."},
+    {id:"p3",review_id:"r7",author_type:"hospital",summary:"담당의 변경으로 혼란을 드렸습니다. 연장 기간 유지비 조정을 협의하겠습니다.",body:"담당의 변경 과정에서 치료 계획 설명이 충분하지 않았던 점 사과드립니다. 연장된 기간의 유지비는 내부 기준에 따라 조정 가능 여부를 검토해 개별 연락드리겠습니다."}
+  ],
+  cases:[
+    {id:"c1",hospital_id:"h1",court:"서울중앙지방법원",case_no:"20XX가단XXXXX(예시)",status:"final",summary:"라섹 후 시력 저하 — 설명의무 위반 일부 인정, 위자료 일부 지급"},
+    {id:"c2",hospital_id:"h5",court:"서울동부지방법원",case_no:"20XX가소XXXXX(예시)",status:"settled",summary:"교정 기간 연장 비용 분쟁 — 조정 성립"},
+    {id:"c3",hospital_id:"h6",court:"서울서부지방법원",case_no:"20XX가단XXXXX(예시)",status:"pending",summary:"임플란트 식립 후 신경 손상 — 1심 진행 중(확정 전)"}
+  ],
+  reports:[]
+};
+
+/* ---------- 실제 데이터: 국민연금 가입 사업장 내역 (서울 안과·치과 직원 수 상위 각 100곳) ---------- */
+const NPS_YM="2026.09";
+const REAL=[{"gu":"강남구","dong":"대치동","road":"서울특별시 강남구 테헤란로","m":193,"j":4,"l":8,"f":"개인","since":"2006-10-13","kind":"일반병원","id":"s-eye-1","type":"eye","name":"누네안과병원"},{"gu":"강서구","dong":"등촌동","road":"서울특별시 강서구 등촌로","m":112,"j":0,"l":4,"f":"법인","since":"1988-01-01","kind":"해당없음","id":"s-eye-2","type":"eye","name":"의료법인:실로암안과병원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 서초대로","m":106,"j":2,"l":1,"f":"개인","since":"1999-07-01","kind":"일반의원","id":"s-eye-3","type":"eye","name":"비앤빛안과"},{"gu":"서초구","dong":"반포동","road":"서울특별시 서초구 강남대로","m":88,"j":0,"l":2,"f":"개인","since":"2017-04-01","kind":"일반의원","id":"s-eye-4","type":"eye","name":"밝은눈안과의원"},{"gu":"서초구","dong":"반포동","road":"서울특별시 서초구 강남대로","m":87,"j":4,"l":1,"f":"개인","since":"2007-06-18","kind":"일반의원","id":"s-eye-5","type":"eye","name":"하늘안과의원"},{"gu":"송파구","dong":"신천동","road":"서울특별시 송파구 올림픽로","m":86,"j":4,"l":3,"f":"개인","since":"2018-12-21","kind":"일반의원","id":"s-eye-6","type":"eye","name":"밝은눈안과의원"},{"gu":"강동구","dong":"성내동","road":"서울특별시 강동구 풍성로37길","m":82,"j":0,"l":0,"f":"개인","since":"1995-03-22","kind":"일반의원","id":"s-eye-7","type":"eye","name":"공안과병원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":77,"j":0,"l":7,"f":"개인","since":"2004-08-01","kind":"일반의원","id":"s-eye-8","type":"eye","name":"지에스(GS)안과"},{"gu":"용산구","dong":"이촌동","road":"서울특별시 용산구 이촌로","m":74,"j":1,"l":4,"f":"개인","since":"2011-10-24","kind":"일반의원","id":"s-eye-9","type":"eye","name":"센트럴 서울안과의원"},{"gu":"강남구","dong":"신사동","road":"서울특별시 강남구 선릉로","m":72,"j":2,"l":1,"f":"개인","since":"2000-11-01","kind":"일반의원","id":"s-eye-10","type":"eye","name":"서울밝은세상안과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로","m":70,"j":0,"l":1,"f":"개인","since":"2021-11-01","kind":"일반의원","id":"s-eye-11","type":"eye","name":"강남이오스안과의원"},{"gu":"강북구","dong":"미아동","road":"서울특별시 강북구 도봉로","m":67,"j":4,"l":1,"f":"개인","since":"2022-02-22","kind":"일반의원","id":"s-eye-12","type":"eye","name":"서울신세계안과 서울점"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 테헤란로","m":62,"j":0,"l":0,"f":"개인","since":"2021-07-09","kind":"일반의원","id":"s-eye-13","type":"eye","name":"밝은성모안과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 테헤란로","m":57,"j":3,"l":4,"f":"개인","since":"2017-12-18","kind":"일반의원","id":"s-eye-14","type":"eye","name":"카이안과"},{"gu":"강남구","dong":"신사동","road":"서울특별시 강남구 언주로","m":57,"j":3,"l":2,"f":"개인","since":"2000-08-12","kind":"일반의원","id":"s-eye-15","type":"eye","name":"압구정성모안과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 서초대로77길","m":56,"j":1,"l":0,"f":"개인","since":"2010-04-01","kind":"일반의원","id":"s-eye-16","type":"eye","name":"수연세안과"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":55,"j":1,"l":6,"f":"개인","since":"2011-07-07","kind":"일반의원","id":"s-eye-17","type":"eye","name":"아이리움안과의원"},{"gu":"구로구","dong":"구로동","road":"서울특별시 구로구 구로중앙로","m":55,"j":0,"l":1,"f":"개인","since":"2023-05-01","kind":"일반의원","id":"s-eye-18","type":"eye","name":"이안과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로","m":54,"j":2,"l":1,"f":"개인","since":"2025-01-01","kind":"일반의원","id":"s-eye-19","type":"eye","name":"강남스마일안과"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 서초대로77길","m":52,"j":0,"l":0,"f":"개인","since":"2023-01-02","kind":"일반의원","id":"s-eye-20","type":"eye","name":"클리어 서울안과의원"},{"gu":"종로구","dong":"종로1가","road":"서울특별시 종로구 종로","m":51,"j":0,"l":0,"f":"개인","since":"1995-01-01","kind":"일반의원","id":"s-eye-21","type":"eye","name":"공안과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":46,"j":0,"l":0,"f":"개인","since":"2007-06-25","kind":"일반의원","id":"s-eye-22","type":"eye","name":"강남눈에미소안과"},{"gu":"영등포구","dong":"여의도동","road":"서울특별시 영등포구 국제금융로6길","m":46,"j":0,"l":0,"f":"개인","since":"2003-07-01","kind":"일반의원","id":"s-eye-23","type":"eye","name":"제이씨 빛소망안과"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로","m":45,"j":0,"l":0,"f":"개인","since":"2021-01-11","kind":"일반의원","id":"s-eye-24","type":"eye","name":"강남그랜드안과의원"},{"gu":"강남구","dong":"신사동","road":"서울특별시 강남구 강남대로","m":45,"j":2,"l":1,"f":"개인","since":"2020-07-27","kind":"일반의원","id":"s-eye-25","type":"eye","name":"더원서울안과의원"},{"gu":"관악구","dong":"봉천동","road":"서울특별시 관악구 관악로","m":44,"j":0,"l":0,"f":"개인","since":"2018-11-01","kind":"일반의원","id":"s-eye-26","type":"eye","name":"에스앤유청안과"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 서초대로77길","m":44,"j":2,"l":3,"f":"개인","since":"2024-01-01","kind":"일반의원","id":"s-eye-27","type":"eye","name":"밝음나눔안과"},{"gu":"강남구","dong":"삼성동","road":"서울특별시 강남구 테헤란로87길","m":43,"j":0,"l":0,"f":"개인","since":"2001-03-01","kind":"일반의원","id":"s-eye-28","type":"eye","name":"세란안과"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 테헤란로","m":42,"j":0,"l":2,"f":"개인","since":"2021-09-01","kind":"일반의원","id":"s-eye-29","type":"eye","name":"강남에이스안과"},{"gu":"강북구","dong":"미아동","road":"서울특별시 강북구 도봉로","m":39,"j":1,"l":1,"f":"개인","since":"2003-07-01","kind":"일반의원","id":"s-eye-30","type":"eye","name":"수안과의원"},{"gu":"서초구","dong":"반포동","road":"서울특별시 서초구 강남대로","m":39,"j":3,"l":1,"f":"개인","since":"2021-07-01","kind":"일반의원","id":"s-eye-31","type":"eye","name":"강남 브랜드 안과"},{"gu":"송파구","dong":"잠실동","road":"서울특별시 송파구 올림픽로","m":37,"j":1,"l":1,"f":"개인","since":"2006-06-03","kind":"일반의원","id":"s-eye-32","type":"eye","name":"잠실삼성안과의원"},{"gu":"송파구","dong":"가락동","road":"서울특별시 송파구 중대로","m":36,"j":1,"l":2,"f":"개인","since":"2016-12-26","kind":"요양병원","id":"s-eye-33","type":"eye","name":"혜민안과병원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":35,"j":4,"l":1,"f":"개인","since":"2022-01-01","kind":"일반의원","id":"s-eye-34","type":"eye","name":"강남밝은미소안과"},{"gu":"강남구","dong":"신사동","road":"서울특별시 강남구 도산대로","m":35,"j":3,"l":2,"f":"개인","since":"2021-07-16","kind":"일반의원","id":"s-eye-35","type":"eye","name":"하이안과"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 서초대로77길","m":35,"j":1,"l":1,"f":"개인","since":"2014-08-01","kind":"일반의원","id":"s-eye-36","type":"eye","name":"온누리스마일안과의원"},{"gu":"강남구","dong":"신사동","road":"서울특별시 강남구 강남대로","m":35,"j":0,"l":0,"f":"개인","since":"2020-08-27","kind":"일반의원","id":"s-eye-37","type":"eye","name":"에스앤유안과의원"},{"gu":"강서구","dong":"화곡동","road":"서울특별시 강서구 강서로","m":35,"j":1,"l":0,"f":"개인","since":"2015-04-20","kind":"일반의원","id":"s-eye-38","type":"eye","name":"잘보는성모안과의원"},{"gu":"관악구","dong":"신림동","road":"서울특별시 관악구 신림로","m":34,"j":0,"l":0,"f":"개인","since":"2013-04-24","kind":"일반의원","id":"s-eye-39","type":"eye","name":"365밝은안과"},{"gu":"노원구","dong":"상계동","road":"서울특별시 노원구 동일로","m":33,"j":3,"l":2,"f":"개인","since":"2020-12-01","kind":"일반의원","id":"s-eye-40","type":"eye","name":"퍼스트성모안과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 서초대로78길","m":33,"j":2,"l":2,"f":"개인","since":"2021-08-01","kind":"일반의원","id":"s-eye-41","type":"eye","name":"퍼스트삼성안과"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로","m":33,"j":1,"l":5,"f":"개인","since":"2021-03-22","kind":"일반의원","id":"s-eye-42","type":"eye","name":"성모진안과의원"},{"gu":"서초구","dong":"반포동","road":"서울특별시 서초구 강남대로85길","m":32,"j":6,"l":5,"f":"개인","since":"2022-05-30","kind":"일반의원","id":"s-eye-43","type":"eye","name":"강남성모원안과"},{"gu":"동대문구","dong":"제기동","road":"서울특별시 동대문구 왕산로","m":32,"j":0,"l":0,"f":"개인","since":"2010-01-04","kind":"일반의원","id":"s-eye-44","type":"eye","name":"서울베스트안과"},{"gu":"서초구","dong":"잠원동","road":"서울특별시 서초구 강남대로","m":32,"j":0,"l":0,"f":"개인","since":"2019-05-21","kind":"일반의원","id":"s-eye-45","type":"eye","name":"압구정안과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 서초대로74길","m":31,"j":2,"l":0,"f":"개인","since":"2006-04-24","kind":"일반의원","id":"s-eye-46","type":"eye","name":"글로리서울안과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 테헤란로","m":31,"j":1,"l":1,"f":"개인","since":"2007-04-24","kind":"일반의원","id":"s-eye-47","type":"eye","name":"강남조은눈안과"},{"gu":"강남구","dong":"대치동","road":"서울특별시 강남구 테헤란로","m":31,"j":2,"l":1,"f":"개인","since":"2019-10-01","kind":"일반의원","id":"s-eye-48","type":"eye","name":"혜안서울안과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":30,"j":2,"l":2,"f":"개인","since":"2019-12-09","kind":"일반의원","id":"s-eye-49","type":"eye","name":"강남이룸안과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":30,"j":2,"l":0,"f":"개인","since":"2016-08-01","kind":"일반의원","id":"s-eye-50","type":"eye","name":"강남서울밝은안과"},{"gu":"양천구","dong":"목동","road":"서울특별시 양천구 오목로","m":30,"j":2,"l":2,"f":"개인","since":"2022-09-01","kind":"일반의원","id":"s-eye-51","type":"eye","name":"호랑이안과"},{"gu":"노원구","dong":"상계동","road":"서울특별시 노원구 노해로","m":27,"j":2,"l":2,"f":"개인","since":"2022-01-01","kind":"일반의원","id":"s-eye-52","type":"eye","name":"서울글로우안과"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 사평대로","m":26,"j":0,"l":2,"f":"개인","since":"2021-06-01","kind":"일반의원","id":"s-eye-53","type":"eye","name":"강남아이원스안과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 테헤란로4길","m":26,"j":3,"l":2,"f":"개인","since":"2026-01-08","kind":"일반의원","id":"s-eye-54","type":"eye","name":"라움스마일안과"},{"gu":"은평구","dong":"불광동","road":"서울특별시 은평구 통일로","m":25,"j":2,"l":2,"f":"개인","since":"2022-08-03","kind":"일반의원","id":"s-eye-55","type":"eye","name":"서울온안과의원"},{"gu":"구로구","dong":"고척동","road":"서울특별시 구로구 경인로","m":25,"j":4,"l":1,"f":"개인","since":"2022-05-23","kind":"일반의원","id":"s-eye-56","type":"eye","name":"타임안과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":25,"j":2,"l":2,"f":"개인","since":"2023-01-03","kind":"일반의원","id":"s-eye-57","type":"eye","name":"힐링안과"},{"gu":"강서구","dong":"등촌동","road":"서울특별시 강서구 화곡로68길","m":25,"j":1,"l":1,"f":"개인","since":"2023-12-02","kind":"일반의원","id":"s-eye-58","type":"eye","name":"연세솔안과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":25,"j":1,"l":1,"f":"개인","since":"2003-07-01","kind":"일반의원","id":"s-eye-59","type":"eye","name":"드림성모안과의원"},{"gu":"마포구","dong":"공덕동","road":"서울특별시 마포구 만리재로","m":24,"j":2,"l":1,"f":"개인","since":"2011-09-14","kind":"일반의원","id":"s-eye-60","type":"eye","name":"공덕안과의원"},{"gu":"서초구","dong":"잠원동","road":"서울특별시 서초구 신반포로","m":24,"j":0,"l":0,"f":"개인","since":"2016-09-01","kind":"일반의원","id":"s-eye-61","type":"eye","name":"엠에스안과"},{"gu":"서대문구","dong":"북가좌동","road":"서울특별시 서대문구 수색로","m":24,"j":1,"l":0,"f":"개인","since":"2016-03-02","kind":"일반의원","id":"s-eye-62","type":"eye","name":"연세장안과의원"},{"gu":"서초구","dong":"양재동","road":"서울특별시 서초구 강남대로","m":23,"j":5,"l":1,"f":"개인","since":"2026-03-30","kind":"일반의원","id":"s-eye-63","type":"eye","name":"삼성스마일안과의원"},{"gu":"중구","dong":"을지로2가","road":"서울특별시 중구 남대문로","m":23,"j":0,"l":0,"f":"개인","since":"2001-07-01","kind":"일반의원","id":"s-eye-64","type":"eye","name":"명동성모안과"},{"gu":"노원구","dong":"공릉동","road":"서울특별시 노원구 동일로","m":22,"j":0,"l":0,"f":"개인","since":"2023-04-01","kind":"일반의원","id":"s-eye-65","type":"eye","name":"태릉밝은안과의원"},{"gu":"중랑구","dong":"망우동","road":"서울특별시 중랑구 망우로","m":22,"j":1,"l":0,"f":"개인","since":"2026-06-16","kind":"일반의원","id":"s-eye-66","type":"eye","name":"우리들안과"},{"gu":"노원구","dong":"상계동","road":"서울특별시 노원구 노해로","m":22,"j":1,"l":0,"f":"개인","since":"2012-09-03","kind":"일반의원","id":"s-eye-67","type":"eye","name":"서울플러스안과"},{"gu":"광진구","dong":"구의동","road":"서울특별시 광진구 천호대로","m":21,"j":1,"l":0,"f":"개인","since":"2023-09-13","kind":"일반의원","id":"s-eye-68","type":"eye","name":"서울삼성안과"},{"gu":"서대문구","dong":"창천동","road":"서울특별시 서대문구 신촌로","m":21,"j":0,"l":0,"f":"개인","since":"2005-12-01","kind":"일반의원","id":"s-eye-69","type":"eye","name":"엘리트안과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 테헤란로","m":21,"j":0,"l":3,"f":"개인","since":"2021-04-06","kind":"일반의원","id":"s-eye-70","type":"eye","name":"강남센트럴안과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":21,"j":0,"l":0,"f":"개인","since":"2025-05-15","kind":"일반의원","id":"s-eye-71","type":"eye","name":"강남도쿄안과의원"},{"gu":"강남구","dong":"삼성동","road":"서울특별시 강남구 테헤란로","m":20,"j":2,"l":2,"f":"개인","since":"2021-10-01","kind":"일반의원","id":"s-eye-72","type":"eye","name":"바른눈서울안과"},{"gu":"중랑구","dong":"상봉동","road":"서울특별시 중랑구 면목로","m":20,"j":0,"l":2,"f":"개인","since":"2021-03-01","kind":"일반의원","id":"s-eye-73","type":"eye","name":"서울퍼시픽안과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 테헤란로","m":20,"j":3,"l":4,"f":"개인","since":"2021-03-01","kind":"일반의원","id":"s-eye-74","type":"eye","name":"첫눈애안과의원"},{"gu":"성동구","dong":"하왕십리동","road":"서울특별시 성동구 왕십리로","m":20,"j":0,"l":0,"f":"개인","since":"2019-09-01","kind":"일반의원","id":"s-eye-75","type":"eye","name":"아이숲안과의원"},{"gu":"양천구","dong":"목동","road":"서울특별시 양천구 등촌로","m":20,"j":0,"l":2,"f":"개인","since":"2023-10-02","kind":"일반의원","id":"s-eye-76","type":"eye","name":"예스안과"},{"gu":"양천구","dong":"목동","road":"서울특별시 양천구 목동동로","m":19,"j":0,"l":0,"f":"개인","since":"2014-07-01","kind":"BIZ_NO미존재사업장","id":"s-eye-77","type":"eye","name":"41타워안과의원"},{"gu":"강서구","dong":"염창동","road":"서울특별시 강서구 공항대로","m":19,"j":0,"l":0,"f":"개인","since":"2016-03-04","kind":"일반의원","id":"s-eye-78","type":"eye","name":"유망안과"},{"gu":"강서구","dong":"화곡동","road":"서울특별시 강서구 화곡로","m":18,"j":0,"l":1,"f":"개인","since":"2022-02-22","kind":"일반의원","id":"s-eye-79","type":"eye","name":"서울리더스안과"},{"gu":"노원구","dong":"상계동","road":"서울특별시 노원구 노해로","m":18,"j":0,"l":0,"f":"개인","since":"2001-12-01","kind":"일반의원","id":"s-eye-80","type":"eye","name":"노원빛사랑안과의원"},{"gu":"노원구","dong":"중계동","road":"서울특별시 노원구 동일로203가길","m":18,"j":1,"l":0,"f":"개인","since":"2017-01-02","kind":"일반의원","id":"s-eye-81","type":"eye","name":"연세우리안과"},{"gu":"강북구","dong":"미아동","road":"서울특별시 강북구 도봉로","m":18,"j":0,"l":0,"f":"개인","since":"2004-01-19","kind":"일반의원","id":"s-eye-82","type":"eye","name":"하나안과"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로","m":17,"j":0,"l":0,"f":"개인","since":"2011-09-01","kind":"일반의원","id":"s-eye-83","type":"eye","name":"강남서울안과의원"},{"gu":"영등포구","dong":"영등포동4가","road":"서울특별시 영등포구 경인로","m":17,"j":0,"l":0,"f":"개인","since":"2022-02-01","kind":"일반의원","id":"s-eye-84","type":"eye","name":"영등포원안과"},{"gu":"송파구","dong":"삼전동","road":"서울특별시 송파구 삼전로","m":17,"j":1,"l":0,"f":"개인","since":"2023-11-20","kind":"일반의원","id":"s-eye-85","type":"eye","name":"아이유안과의원"},{"gu":"강남구","dong":"신사동","road":"서울특별시 강남구 논현로","m":17,"j":1,"l":0,"f":"개인","since":"2018-04-02","kind":"일반의원","id":"s-eye-86","type":"eye","name":"압구정에스앤비안과의원"},{"gu":"구로구","dong":"신도림동","road":"서울특별시 구로구 경인로","m":17,"j":1,"l":0,"f":"개인","since":"2022-03-07","kind":"일반의원","id":"s-eye-87","type":"eye","name":"서울눈에빛안과의원"},{"gu":"중구","dong":"충무로2가","road":"서울특별시 중구 퇴계로","m":16,"j":0,"l":0,"f":"개인","since":"2012-05-01","kind":"BIZ_NO미존재사업장","id":"s-eye-88","type":"eye","name":"명동서울밝은안과의원"},{"gu":"구로구","dong":"구로동","road":"서울특별시 구로구 디지털로32길","m":16,"j":0,"l":0,"f":"개인","since":"2005-05-02","kind":"일반의원","id":"s-eye-89","type":"eye","name":"서울연세안과"},{"gu":"서대문구","dong":"홍제동","road":"서울특별시 서대문구 통일로","m":16,"j":1,"l":0,"f":"개인","since":"2004-05-01","kind":"BIZ_NO미존재사업장","id":"s-eye-90","type":"eye","name":"서울안과의원"},{"gu":"강남구","dong":"대치동","road":"서울특별시 강남구 도곡로","m":16,"j":0,"l":0,"f":"개인","since":"2010-07-01","kind":"일반의원","id":"s-eye-91","type":"eye","name":"대치연세안과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로","m":16,"j":0,"l":0,"f":"개인","since":"2010-01-02","kind":"일반의원","id":"s-eye-92","type":"eye","name":"아이플러스안과의원"},{"gu":"마포구","dong":"상암동","road":"서울특별시 마포구 월드컵북로","m":16,"j":0,"l":0,"f":"개인","since":"2015-04-01","kind":"일반의원","id":"s-eye-93","type":"eye","name":"디엠씨(DMC)조은안과의원"},{"gu":"성북구","dong":"동선동4가","road":"서울특별시 성북구 동소문로","m":15,"j":0,"l":1,"f":"개인","since":"2003-07-01","kind":"일반의원","id":"s-eye-94","type":"eye","name":"이인섭안과"},{"gu":"서대문구","dong":"창천동","road":"서울특별시 서대문구 신촌로","m":15,"j":0,"l":0,"f":"개인","since":"2015-10-13","kind":"일반의원","id":"s-eye-95","type":"eye","name":"빛사랑안과의원"},{"gu":"중랑구","dong":"면목동","road":"서울특별시 중랑구 사가정로","m":15,"j":0,"l":0,"f":"개인","since":"2026-03-01","kind":"일반의원","id":"s-eye-96","type":"eye","name":"매일연안과의원"},{"gu":"도봉구","dong":"쌍문동","road":"서울특별시 도봉구 도봉로","m":15,"j":0,"l":0,"f":"개인","since":"2009-04-01","kind":"일반의원","id":"s-eye-97","type":"eye","name":"성모안과의원"},{"gu":"강동구","dong":"천호동","road":"서울특별시 강동구 올림픽로","m":15,"j":1,"l":1,"f":"개인","since":"2023-07-17","kind":"일반의원","id":"s-eye-98","type":"eye","name":"그랜드성모안과의원"},{"gu":"종로구","dong":"종로2가","road":"서울특별시 종로구 종로","m":15,"j":0,"l":0,"f":"개인","since":"2004-03-11","kind":"일반의원","id":"s-eye-99","type":"eye","name":"예본안과의원"},{"gu":"서초구","dong":"잠원동","road":"서울특별시 서초구 강남대로","m":14,"j":0,"l":0,"f":"개인","since":"2019-04-15","kind":"일반의원","id":"s-eye-100","type":"eye","name":"씨케이(CK)성모안과의원"},{"gu":"강남구","dong":"논현동","road":"서울특별시 강남구 도산대로","m":288,"j":1,"l":5,"f":"개인","since":"2007-05-01","kind":"치과병원","id":"s-dental-1","type":"dental","name":"석플란트치과병원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로","m":219,"j":10,"l":21,"f":"개인","since":"2023-05-08","kind":"치과의원","id":"s-dental-2","type":"dental","name":"하루플란트치과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 봉은사로2길","m":131,"j":7,"l":5,"f":"개인","since":"2006-12-01","kind":"치과의원","id":"s-dental-3","type":"dental","name":"원데이치과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":111,"j":13,"l":10,"f":"개인","since":"2022-06-01","kind":"치과의원","id":"s-dental-4","type":"dental","name":"똑똑플란트치과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로","m":98,"j":5,"l":2,"f":"개인","since":"2022-04-01","kind":"치과의원","id":"s-dental-5","type":"dental","name":"젊어지는치과의원"},{"gu":"강서구","dong":"화곡동","road":"서울특별시 강서구 화곡로","m":85,"j":2,"l":1,"f":"개인","since":"2009-08-01","kind":"치과병원","id":"s-dental-6","type":"dental","name":"더와이즈치과병원"},{"gu":"강서구","dong":"화곡동","road":"서울특별시 강서구 강서로","m":83,"j":5,"l":3,"f":"개인","since":"2024-07-01","kind":"치과의원","id":"s-dental-7","type":"dental","name":"연세힐치과병원"},{"gu":"강남구","dong":"논현동","road":"서울특별시 강남구 언주로","m":79,"j":3,"l":0,"f":"개인","since":"2023-10-01","kind":"치과병원","id":"s-dental-8","type":"dental","name":"미니쉬치과병원"},{"gu":"종로구","dong":"연건동","road":"서울특별시 종로구 대학로","m":67,"j":2,"l":3,"f":"법인","since":"2001-09-01","kind":"치과병원","id":"s-dental-9","type":"dental","name":"서울대학교치과병원"},{"gu":"강서구","dong":"화곡동","road":"서울특별시 강서구 강서로","m":66,"j":5,"l":4,"f":"개인","since":"2018-08-02","kind":"치과의원","id":"s-dental-10","type":"dental","name":"365서울원탑치과의원"},{"gu":"마포구","dong":"노고산동","road":"서울특별시 마포구 신촌로","m":65,"j":1,"l":2,"f":"개인","since":"2022-03-01","kind":"치과병원","id":"s-dental-11","type":"dental","name":"신촌다인치과병원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 테헤란로10길","m":64,"j":3,"l":2,"f":"개인","since":"2024-02-05","kind":"치과의원","id":"s-dental-12","type":"dental","name":"원치과의원"},{"gu":"강북구","dong":"번동","road":"서울특별시 강북구 도봉로","m":58,"j":2,"l":2,"f":"개인","since":"2019-06-10","kind":"치과의원","id":"s-dental-13","type":"dental","name":"서울숙면치과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":58,"j":1,"l":1,"f":"개인","since":"2023-02-01","kind":"치과의원","id":"s-dental-14","type":"dental","name":"강남새로치과의원"},{"gu":"강북구","dong":"미아동","road":"서울특별시 강북구 도봉로","m":57,"j":5,"l":5,"f":"개인","since":"2019-06-25","kind":"치과의원","id":"s-dental-15","type":"dental","name":"원더플치과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 논현로105길","m":54,"j":3,"l":0,"f":"개인","since":"2012-04-27","kind":"치과의원","id":"s-dental-16","type":"dental","name":"라이브치과병원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":54,"j":2,"l":4,"f":"개인","since":"2017-09-01","kind":"치과의원","id":"s-dental-17","type":"dental","name":"강남클리어치과의원"},{"gu":"동대문구","dong":"휘경동","road":"서울특별시 동대문구 망우로20가길","m":53,"j":1,"l":0,"f":"법인","since":"1993-03-01","kind":"치과병원","id":"s-dental-18","type":"dental","name":"삼육치과병원"},{"gu":"성동구","dong":"홍익동","road":"서울특별시 성동구 마장로","m":52,"j":2,"l":0,"f":"법인","since":"2005-07-25","kind":"BIZ_NO미존재사업장","id":"s-dental-19","type":"dental","name":"서울특별시립장애인치과병원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 서초대로77길","m":51,"j":2,"l":2,"f":"개인","since":"2019-07-15","kind":"치과의원","id":"s-dental-20","type":"dental","name":"티유치과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 서초대로77길","m":50,"j":2,"l":1,"f":"개인","since":"2014-09-15","kind":"치과의원","id":"s-dental-21","type":"dental","name":"화이트드림치과"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로69길","m":50,"j":4,"l":6,"f":"개인","since":"2019-09-27","kind":"치과의원","id":"s-dental-22","type":"dental","name":"고르다치과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 테헤란로25길","m":49,"j":0,"l":0,"f":"개인","since":"2011-03-01","kind":"BIZ_NO미존재사업장","id":"s-dental-23","type":"dental","name":"세이프플란트치과의원"},{"gu":"서초구","dong":"양재동","road":"서울특별시 서초구 강남대로","m":47,"j":3,"l":1,"f":"개인","since":"2022-12-01","kind":"치과의원","id":"s-dental-24","type":"dental","name":"연세굿데이치과의원양재점"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로","m":46,"j":1,"l":0,"f":"개인","since":"2014-10-28","kind":"치과의원","id":"s-dental-25","type":"dental","name":"강남레옹치과의원"},{"gu":"송파구","dong":"거여동","road":"서울특별시 송파구 거마로","m":45,"j":0,"l":0,"f":"개인","since":"2018-12-01","kind":"치과의원","id":"s-dental-26","type":"dental","name":"굿플란트치과"},{"gu":"강남구","dong":"논현동","road":"서울특별시 강남구 논현로111길","m":43,"j":4,"l":2,"f":"개인","since":"2023-03-23","kind":"치과의원","id":"s-dental-27","type":"dental","name":"루시드치과의원"},{"gu":"서초구","dong":"잠원동","road":"서울특별시 서초구 강남대로","m":42,"j":0,"l":0,"f":"개인","since":"2020-02-10","kind":"치과의원","id":"s-dental-28","type":"dental","name":"더뉴치과의원"},{"gu":"중구","dong":"남대문로2가","road":"서울특별시 중구 남대문로","m":40,"j":2,"l":1,"f":"개인","since":"2020-01-01","kind":"치과의원","id":"s-dental-29","type":"dental","name":"명동콤비치과의원"},{"gu":"중구","dong":"을지로2가","road":"서울특별시 중구 명동7길","m":39,"j":3,"l":1,"f":"개인","since":"2024-06-16","kind":"치과의원","id":"s-dental-30","type":"dental","name":"시스템치과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 사평대로","m":39,"j":3,"l":2,"f":"개인","since":"2003-08-01","kind":"치과의원","id":"s-dental-31","type":"dental","name":"루센트치과"},{"gu":"도봉구","dong":"창동","road":"서울특별시 도봉구 도봉로","m":38,"j":0,"l":3,"f":"개인","since":"2010-12-24","kind":"치과의원","id":"s-dental-32","type":"dental","name":"강북다인치과(양현봉)"},{"gu":"서초구","dong":"반포동","road":"서울특별시 서초구 강남대로","m":37,"j":2,"l":3,"f":"개인","since":"2020-02-17","kind":"치과의원","id":"s-dental-33","type":"dental","name":"블랑쉬치과"},{"gu":"강남구","dong":"청담동","road":"서울특별시 강남구 도산대로","m":36,"j":0,"l":1,"f":"개인","since":"2008-03-04","kind":"치과병원","id":"s-dental-34","type":"dental","name":"에스플란트치과병원"},{"gu":"송파구","dong":"삼전동","road":"서울특별시 송파구 백제고분로","m":35,"j":1,"l":0,"f":"개인","since":"2024-09-24","kind":"치과병원","id":"s-dental-35","type":"dental","name":"서울오브치과병원"},{"gu":"강남구","dong":"신사동","road":"서울특별시 강남구 강남대로152길","m":35,"j":4,"l":2,"f":"개인","since":"2016-10-01","kind":"치과의원","id":"s-dental-36","type":"dental","name":"플란치과"},{"gu":"노원구","dong":"상계동","road":"서울특별시 노원구 노해로81길","m":35,"j":0,"l":0,"f":"개인","since":"2004-01-01","kind":"치과병원","id":"s-dental-37","type":"dental","name":"강북예치과병원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로","m":35,"j":1,"l":0,"f":"개인","since":"2019-11-01","kind":"치과의원","id":"s-dental-38","type":"dental","name":"강남애프터치과"},{"gu":"강남구","dong":"논현동","road":"서울특별시 강남구 도산대로","m":34,"j":2,"l":1,"f":"개인","since":"2025-04-25","kind":"치과의원","id":"s-dental-39","type":"dental","name":"레브치과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":34,"j":0,"l":2,"f":"개인","since":"2023-01-01","kind":"치과의원","id":"s-dental-40","type":"dental","name":"연세유라인치과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 서초대로","m":33,"j":3,"l":1,"f":"개인","since":"2011-06-13","kind":"치과의원","id":"s-dental-41","type":"dental","name":"서울리마치과"},{"gu":"송파구","dong":"신천동","road":"서울특별시 송파구 송파대로","m":33,"j":0,"l":1,"f":"개인","since":"2016-10-12","kind":"치과의원","id":"s-dental-42","type":"dental","name":"스탠다드치과"},{"gu":"마포구","dong":"도화동","road":NaN,"m":32,"j":0,"l":0,"f":"개인","since":"2011-06-22","kind":"치과의원","id":"s-dental-43","type":"dental","name":"한그루치과병원"},{"gu":"강북구","dong":"번동","road":"서울특별시 강북구 도봉로","m":32,"j":0,"l":0,"f":"개인","since":"2021-03-01","kind":"치과의원","id":"s-dental-44","type":"dental","name":"에스다인치과의원"},{"gu":"광진구","dong":"화양동","road":"서울특별시 광진구 능동로","m":32,"j":2,"l":2,"f":"개인","since":"2004-12-01","kind":"치과의원","id":"s-dental-45","type":"dental","name":"에스(S)리더치과병원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":32,"j":1,"l":2,"f":"개인","since":"2015-11-27","kind":"치과의원","id":"s-dental-46","type":"dental","name":"제아치과의원"},{"gu":"강북구","dong":"수유동","road":"서울특별시 강북구 한천로","m":31,"j":0,"l":3,"f":"개인","since":"2021-07-01","kind":"치과의원","id":"s-dental-47","type":"dental","name":"강북백상치과의원"},{"gu":"도봉구","dong":"창동","road":"서울특별시 도봉구 마들로13길","m":31,"j":1,"l":1,"f":"개인","since":"2023-10-10","kind":"치과의원","id":"s-dental-48","type":"dental","name":"아프로치과의원"},{"gu":"영등포구","dong":"여의도동","road":"서울특별시 영등포구 국제금융로6길","m":31,"j":4,"l":0,"f":"개인","since":"2021-10-18","kind":"치과의원","id":"s-dental-49","type":"dental","name":"서울센텀턱구강내과치과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":30,"j":1,"l":2,"f":"개인","since":"2009-12-11","kind":"치과의원","id":"s-dental-50","type":"dental","name":"킹콩치과의원"},{"gu":"은평구","dong":"대조동","road":"서울특별시 은평구 불광로","m":29,"j":1,"l":1,"f":"개인","since":"2022-08-11","kind":"치과의원","id":"s-dental-51","type":"dental","name":"365서울탑치과의원"},{"gu":"양천구","dong":"신정동","road":"서울특별시 양천구 오목로","m":29,"j":3,"l":0,"f":"개인","since":"1998-05-01","kind":"치과병원","id":"s-dental-52","type":"dental","name":"목동예치과병원"},{"gu":"도봉구","dong":"창동","road":"서울특별시 도봉구 도봉로","m":29,"j":0,"l":0,"f":"개인","since":"2008-04-12","kind":"치과의원","id":"s-dental-53","type":"dental","name":"서울하이안치과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로","m":29,"j":1,"l":0,"f":"개인","since":"2023-04-06","kind":"치과의원","id":"s-dental-54","type":"dental","name":"뉴엔치과의원"},{"gu":"송파구","dong":"잠실동","road":"서울특별시 송파구 석촌호수로","m":28,"j":1,"l":0,"f":"개인","since":"2020-04-01","kind":"치과병원","id":"s-dental-55","type":"dental","name":"더바름치과병원"},{"gu":"서초구","dong":"방배동","road":"서울특별시 서초구 방배로","m":27,"j":0,"l":1,"f":"개인","since":"2001-09-01","kind":"치과의원","id":"s-dental-56","type":"dental","name":"가야치과병원"},{"gu":"송파구","dong":"방이동","road":"서울특별시 송파구 백제고분로","m":27,"j":1,"l":1,"f":"개인","since":"2023-10-04","kind":"치과의원","id":"s-dental-57","type":"dental","name":"서울0.1치과"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 봉은사로","m":27,"j":2,"l":0,"f":"개인","since":"2020-02-24","kind":"치과의원","id":"s-dental-58","type":"dental","name":"르치과"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 테헤란로4길","m":27,"j":1,"l":1,"f":"개인","since":"2024-04-01","kind":"치과의원","id":"s-dental-59","type":"dental","name":"퍼펙트치과의원"},{"gu":"관악구","dong":"신림동","road":"서울특별시 관악구 난곡로","m":27,"j":0,"l":2,"f":"개인","since":"2009-06-01","kind":"치과의원","id":"s-dental-60","type":"dental","name":"언제나이든치과의원"},{"gu":"서초구","dong":"반포동","road":"서울특별시 서초구 강남대로","m":27,"j":3,"l":1,"f":"개인","since":"2023-11-27","kind":"치과의원","id":"s-dental-61","type":"dental","name":"르블랑치과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로","m":26,"j":2,"l":2,"f":"개인","since":"2024-04-22","kind":"치과의원","id":"s-dental-62","type":"dental","name":"리엔장치과의원"},{"gu":"송파구","dong":"송파동","road":"서울특별시 송파구 송파대로","m":26,"j":1,"l":1,"f":"개인","since":"2018-08-18","kind":"치과의원","id":"s-dental-63","type":"dental","name":"연세굿플란트치과"},{"gu":"강동구","dong":"명일동","road":"서울특별시 강동구 양재대로","m":26,"j":2,"l":1,"f":"개인","since":"2019-02-28","kind":"치과병원","id":"s-dental-64","type":"dental","name":"서울더자연치과"},{"gu":"서초구","dong":"잠원동","road":"서울특별시 서초구 강남대로","m":26,"j":1,"l":9,"f":"개인","since":"2020-09-01","kind":"치과의원","id":"s-dental-65","type":"dental","name":"서울센텀치과의원"},{"gu":"강남구","dong":"논현동","road":"서울특별시 강남구 도산대로","m":26,"j":0,"l":0,"f":"개인","since":"2016-10-04","kind":"치과의원","id":"s-dental-66","type":"dental","name":"이유(eu)구강악안면외과치과의원"},{"gu":"관악구","dong":"신림동","road":"서울특별시 관악구 신림로","m":26,"j":1,"l":0,"f":"개인","since":"2023-01-01","kind":"치과의원","id":"s-dental-67","type":"dental","name":"연세유라인치과의원"},{"gu":"강남구","dong":"대치동","road":"서울특별시 강남구 남부순환로","m":26,"j":0,"l":0,"f":"개인","since":"2003-08-01","kind":"치과의원","id":"s-dental-68","type":"dental","name":"웃는내일치과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 강남대로","m":26,"j":0,"l":0,"f":"개인","since":"2016-04-07","kind":"치과의원","id":"s-dental-69","type":"dental","name":"미유치과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 서초대로38길","m":25,"j":0,"l":2,"f":"개인","since":"2017-10-10","kind":"치과의원","id":"s-dental-70","type":"dental","name":"서울큰사랑치과의원"},{"gu":"강서구","dong":"화곡동","road":"서울특별시 강서구 화곡로25길","m":25,"j":0,"l":0,"f":"개인","since":"2021-01-04","kind":"치과병원","id":"s-dental-71","type":"dental","name":"이편한세상치과의원화곡점"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 서초대로","m":25,"j":0,"l":0,"f":"개인","since":"2011-01-01","kind":"치과의원","id":"s-dental-72","type":"dental","name":"크림치과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":25,"j":1,"l":0,"f":"개인","since":"2010-11-01","kind":"치과병원","id":"s-dental-73","type":"dental","name":"서울위드치과"},{"gu":"노원구","dong":"상계동","road":"서울특별시 노원구 노해로","m":24,"j":4,"l":2,"f":"개인","since":"2010-01-18","kind":"치과병원","id":"s-dental-74","type":"dental","name":"다인치과병원"},{"gu":"강동구","dong":"둔촌동","road":"서울특별시 강동구 양재대로","m":24,"j":1,"l":1,"f":"개인","since":"2025-01-31","kind":"치과의원","id":"s-dental-75","type":"dental","name":"연세꿈꾸는치과교정과의원"},{"gu":"은평구","dong":"구산동","road":"서울특별시 은평구 서오릉로","m":24,"j":1,"l":0,"f":"법인","since":"2012-08-13","kind":"일반의원","id":"s-dental-76","type":"dental","name":"살림의료복지사회적협동조합(살림의원 살림치과)"},{"gu":"송파구","dong":"가락동","road":"서울특별시 송파구 오금로","m":24,"j":24,"l":5,"f":"개인","since":"2026-09-01","kind":"치과의원","id":"s-dental-77","type":"dental","name":"서울권치과의원"},{"gu":"노원구","dong":"상계동","road":"서울특별시 노원구 동일로","m":24,"j":2,"l":0,"f":"개인","since":"2020-12-07","kind":"치과의원","id":"s-dental-78","type":"dental","name":"오른치과의원"},{"gu":"서대문구","dong":"창천동","road":"서울특별시 서대문구 명물길","m":24,"j":2,"l":0,"f":"개인","since":"2014-09-11","kind":"치과의원","id":"s-dental-79","type":"dental","name":"잎사귀치과"},{"gu":"강동구","dong":"암사동","road":"서울특별시 강동구 올림픽로","m":24,"j":1,"l":1,"f":"개인","since":"2021-02-22","kind":"치과의원","id":"s-dental-80","type":"dental","name":"닥터재일치과의원"},{"gu":"종로구","dong":"청진동","road":"서울특별시 종로구 종로3길","m":23,"j":1,"l":1,"f":"개인","since":"2017-11-02","kind":"치과의원","id":"s-dental-81","type":"dental","name":"더스퀘어치과의원"},{"gu":"강남구","dong":"논현동","road":"서울특별시 강남구 봉은사로","m":23,"j":0,"l":0,"f":"개인","since":"2008-03-07","kind":"치과의원","id":"s-dental-82","type":"dental","name":"유씨강남치과의원"},{"gu":"서초구","dong":"서초동","road":"서울특별시 서초구 효령로","m":23,"j":0,"l":0,"f":"개인","since":"2008-11-07","kind":"치과병원","id":"s-dental-83","type":"dental","name":"서울탑치과병원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":23,"j":0,"l":2,"f":"개인","since":"2016-06-12","kind":"치과의원","id":"s-dental-84","type":"dental","name":"2D치과"},{"gu":"관악구","dong":"봉천동","road":"서울특별시 관악구 관악로","m":23,"j":1,"l":1,"f":"개인","since":"2026-05-01","kind":"치과의원","id":"s-dental-85","type":"dental","name":"관악365일치과의원"},{"gu":"중구","dong":"남대문로4가","road":"서울특별시 중구 세종대로","m":23,"j":0,"l":0,"f":"개인","since":"2006-08-01","kind":"치과의원","id":"s-dental-86","type":"dental","name":"최앤이치과의원"},{"gu":"강남구","dong":"삼성동","road":"서울특별시 강남구 테헤란로","m":22,"j":3,"l":0,"f":"개인","since":"2009-01-01","kind":"치과병원","id":"s-dental-87","type":"dental","name":"강남이플러스치과"},{"gu":"동대문구","dong":"제기동","road":"서울특별시 동대문구 왕산로","m":22,"j":0,"l":1,"f":"개인","since":"2003-07-01","kind":"치과의원","id":"s-dental-88","type":"dental","name":"굿모닝치과의원"},{"gu":"관악구","dong":"봉천동","road":"서울특별시 관악구 남부순환로","m":22,"j":0,"l":2,"f":"개인","since":"2022-12-31","kind":"치과의원","id":"s-dental-89","type":"dental","name":"서울리멤버치과의원"},{"gu":"동대문구","dong":"전농동","road":"서울특별시 동대문구 답십리로","m":22,"j":1,"l":0,"f":"개인","since":"2024-03-29","kind":"치과의원","id":"s-dental-90","type":"dental","name":"연세스카이치과의원"},{"gu":"강남구","dong":"역삼동","road":"서울특별시 강남구 강남대로","m":22,"j":1,"l":0,"f":"개인","since":"2021-04-01","kind":"치과병원","id":"s-dental-91","type":"dental","name":"서울페이스21치과병원"},{"gu":"구로구","dong":"고척동","road":"서울특별시 구로구 중앙로","m":22,"j":3,"l":1,"f":"개인","since":"2016-02-27","kind":"치과의원","id":"s-dental-92","type":"dental","name":"삼성리더스치과의원"},{"gu":"강남구","dong":"논현동","road":"서울특별시 강남구 도산대로","m":22,"j":6,"l":2,"f":"개인","since":"2024-09-02","kind":"치과의원","id":"s-dental-93","type":"dental","name":"메이크치과의원(MAKE치과의원)"},{"gu":"영등포구","dong":"신길동","road":"서울특별시 영등포구 도신로","m":22,"j":0,"l":1,"f":"개인","since":"2020-12-23","kind":"치과병원","id":"s-dental-94","type":"dental","name":"연세디자인치과의원"},{"gu":"종로구","dong":"청진동","road":"서울특별시 종로구 종로","m":21,"j":0,"l":1,"f":"개인","since":"2002-11-01","kind":"치과병원","id":"s-dental-95","type":"dental","name":"하나로치과의원"},{"gu":"강남구","dong":"신사동","road":"서울특별시 강남구 강남대로","m":21,"j":1,"l":2,"f":"개인","since":"2008-12-23","kind":"치과의원","id":"s-dental-96","type":"dental","name":"스마일디치과의원"},{"gu":"강남구","dong":"신사동","road":"서울특별시 강남구 언주로","m":21,"j":0,"l":0,"f":"개인","since":"2017-04-01","kind":"치과의원","id":"s-dental-97","type":"dental","name":"압구정민치과의원"},{"gu":"강남구","dong":"논현동","road":"서울특별시 강남구 봉은사로","m":21,"j":2,"l":0,"f":"개인","since":"2010-12-09","kind":"치과의원","id":"s-dental-98","type":"dental","name":"서울매스티지치과"},{"gu":"은평구","dong":"불광동","road":"서울특별시 은평구 통일로","m":21,"j":2,"l":1,"f":"개인","since":"2021-06-25","kind":"치과의원","id":"s-dental-99","type":"dental","name":"디테일탑치과의원"},{"gu":"중구","dong":"수표동","road":"서울특별시 중구 청계천로","m":21,"j":1,"l":0,"f":"개인","since":"2012-04-16","kind":"치과의원","id":"s-dental-100","type":"dental","name":"서울우리원치과의원"}];
+const HIRA={"h":{"s-eye-1":{"hn":"누네안과병원","cl":"병원","dr":29,"sdr":27,"est":"20061220","addr":"서울특별시 강남구 테헤란로 408, 대치빌딩 지상9층~지상17층 (대치동)","url":"http://www.noon.co.kr","spec":{"내과":2,"마취통증의학과":1,"안과":24},"price":{"라섹":[2700000,2800000],"라식":[2800000,2800000]}},"s-eye-2":{"hn":"실로암안과병원","cl":"병원","dr":12,"sdr":12,"est":"19860218","addr":"서울특별시 강서구 등촌로 181, (등촌동, 실로암안과병원)","url":"http://www.siloam.co.kr","spec":{"내과":1,"안과":11},"price":{"라섹":[1400000,2700000]}},"s-eye-3":{"hn":"비앤빛안과의원","cl":"의원","dr":10,"sdr":10,"est":"20060804","addr":"서울특별시 서초구 서초대로 411, 지하2층 (서초동, GT TOWER)","url":"","spec":{"안과":10},"price":{}},"s-eye-4":{"hn":"밝은눈안과의원","cl":"의원","dr":7,"sdr":7,"est":"20090616","addr":"서울특별시 서초구 강남대로 531, 지하2,지하1,8층 (반포동)","url":"","spec":{"안과":7},"price":{}},"s-eye-5":{"hn":"하늘안과의원","cl":"의원","dr":10,"sdr":10,"est":"20150831","addr":"서울특별시 서초구 강남대로 509, A동 B3~2,8~10층 (반포동)","url":"http://www.bweye.co.kr","spec":{"안과":10},"price":{}},"s-eye-6":{"hn":"밝은눈안과의원","cl":"의원","dr":5,"sdr":5,"est":"20181217","addr":"서울특별시 송파구 올림픽로 300, 롯데월드타워앤드롯데월드몰 월드타워동 11층 (신천동)","url":"http://www.eye1004.co.kr","spec":{"안과":5},"price":{}},"s-eye-7":{"hn":"공안과병원","cl":"병원","dr":10,"sdr":10,"est":"20120102","addr":"서울특별시 강동구 풍성로37길 45, (성내동)","url":"","spec":{"내과":1,"안과":9},"price":{}},"s-eye-8":{"hn":"지에스안과의원","cl":"의원","dr":7,"sdr":7,"est":"20051201","addr":"서울특별시 강남구 강남대로 390, 미진프라자 8,15,16층 (역삼동)","url":"http://www.gseyecenter.co.kr","spec":{"안과":7},"price":{}},"s-eye-9":{"hn":"센트럴서울안과의원","cl":"의원","dr":8,"sdr":8,"est":"20111027","addr":"서울특별시 용산구 이촌로 224, (이촌동, 리버뷰맨션)","url":"http://www.cseye.net","spec":{"안과":8},"price":{}},"s-eye-10":{"hn":"서울밝은세상안과의원","cl":"의원","dr":7,"sdr":7,"est":"20001004","addr":"서울특별시 강남구 선릉로 823, 한양타운빌딩 2층일부 6층일부, 7층 (신사동)","url":"http://www.iloveeye.com","spec":{"안과":7},"price":{}},"s-eye-11":{"hn":"강남이오스안과의원","cl":"의원","dr":6,"sdr":6,"est":"20140725","addr":"서울특별시 서초구 강남대로 355, 삼성화재 서초사옥 18,19,20층 (서초동)","url":"","spec":{"안과":6},"price":{}},"s-eye-12":{"hn":"서울신세계안과의원","cl":"의원","dr":9,"sdr":9,"est":"20210308","addr":"서울특별시 강북구 도봉로 52, 연이빌딩 4,5층 (미아동)","url":"","spec":{"안과":9},"price":{}},"s-eye-13":{"hn":"밝은성모안과의원","cl":"의원","dr":7,"sdr":7,"est":"20090710","addr":"서울특별시 강남구 테헤란로 110, 켐브리지 강남빌딩 301호,1601호,1701호,1801호 (역삼동)","url":"","spec":{"안과":7},"price":{}},"s-eye-14":{"hn":"카이안과의원","cl":"의원","dr":4,"sdr":4,"est":"20171213","addr":"서울특별시 강남구 테헤란로 326, 태보 역삼 아이타워 2,12층 (역삼동)","url":"","spec":{"안과":4},"price":{}},"s-eye-15":{"hn":"압구정성모안과의원","cl":"의원","dr":10,"sdr":10,"est":"20000816","addr":"서울특별시 강남구 언주로 859, 쉬즈.애비뉴빌딩, B1,1,2,3,5층  (신사동)","url":"","spec":{"안과":10},"price":{}},"s-eye-16":{"hn":"수연세안과의원","cl":"의원","dr":6,"sdr":6,"est":"20100324","addr":"서울특별시 서초구 서초대로77길 54, 서초더블유타워 5, 6층 (서초동)","url":"","spec":{"안과":6},"price":{}},"s-eye-17":{"hn":"아이리움안과의원","cl":"의원","dr":5,"sdr":5,"est":"20110629","addr":"서울특별시 강남구 강남대로 388, 강남센타빌딩 6,7층 (역삼동)","url":"","spec":{"안과":5},"price":{}},"s-eye-18":{"hn":"이안과의원","cl":"의원","dr":5,"sdr":5,"est":"20230428","addr":"서울특별시 구로구 구로중앙로 217, 지하1층, 5~8층 (구로동)","url":"","spec":{"안과":5},"price":{}},"s-eye-19":{"hn":"강남스마일안과의원","cl":"의원","dr":4,"sdr":4,"est":"20241226","addr":"서울특별시 서초구 강남대로 405, 통영빌딩 4,6층 (서초동)","url":"","spec":{"안과":4},"price":{}},"s-eye-20":{"hn":"클리어서울안과의원","cl":"의원","dr":3,"sdr":3,"est":"20230410","addr":"서울특별시 서초구 서초대로77길 17, BLOCK77 6층 (서초동)","url":"","spec":{"안과":3},"price":{}},"s-eye-21":{"hn":"공안과의원","cl":"의원","dr":6,"sdr":6,"est":"19941231","addr":"서울특별시 종로구 종로 19, 르메이에르종로타운1 306,311,312,406,407,506~8,516호 (종로1가)","url":"https://www.kongeye.co.kr/default_index.asp","spec":{"안과":6},"price":{}},"s-eye-23":{"hn":"제이씨빛소망안과의원","cl":"의원","dr":4,"sdr":4,"est":"20030121","addr":"서울특별시 영등포구 국제금융로6길 33, 6층 (여의도동, 맨하탄빌딩)","url":"","spec":{"안과":4},"price":{}},"s-eye-24":{"hn":"강남그랜드안과의원","cl":"의원","dr":3,"sdr":3,"est":"20210126","addr":"서울특별시 서초구 강남대로 363, 363강남타워 4,5층 (서초동)","url":"","spec":{"안과":3},"price":{}},"s-eye-25":{"hn":"더원서울안과의원","cl":"의원","dr":6,"sdr":6,"est":"20200720","addr":"서울특별시 강남구 강남대로 652, 8,9층 (신사동)","url":"","spec":{"안과":6},"price":{}},"s-eye-27":{"hn":"밝음나눔안과의원","cl":"의원","dr":5,"sdr":5,"est":"20190513","addr":"서울특별시 서초구 서초대로77길 3, 아라타워 3층 (서초동)","url":"","spec":{"안과":5},"price":{}},"s-eye-28":{"hn":"세란안과의원","cl":"의원","dr":5,"sdr":5,"est":"20001229","addr":"서울특별시 강남구 테헤란로87길 29, (삼성동, M타워빌딩 2층, 4층일부)","url":"http://www.seraneye.com/","spec":{"안과":5},"price":{}},"s-eye-29":{"hn":"강남에이스안과의원","cl":"의원","dr":2,"sdr":2,"est":"20210830","addr":"서울특별시 강남구 테헤란로 151, 역삼하이츠빌딩 2층,지하1층 2호 (역삼동)","url":"","spec":{"안과":2},"price":{}},"s-eye-30":{"hn":"수안과의원","cl":"의원","dr":7,"sdr":7,"est":"19990303","addr":"서울특별시 강북구 도봉로 245, 수메디칼빌딩 지하1,지상2,3층 (미아동)","url":"","spec":{"안과":7},"price":{}},"s-eye-31":{"hn":"강남브랜드안과의원","cl":"의원","dr":4,"sdr":4,"est":"20210723","addr":"서울특별시 서초구 강남대로 519, 도충빌딩 3,8,9층 (반포동)","url":"","spec":{"안과":4},"price":{}},"s-eye-32":{"hn":"잠실삼성안과의원","cl":"의원","dr":5,"sdr":5,"est":"20060603","addr":"서울특별시 송파구 올림픽로 114, 서경빌딩 (잠실동)","url":"http://www.topeye.co.kr","spec":{"안과":4,"가정의학과":1},"price":{}},"s-eye-33":{"hn":"혜민안과병원","cl":"병원","dr":4,"sdr":4,"est":"20161222","addr":"서울특별시 송파구 중대로 122, (가락동)","url":"","spec":{"안과":4},"price":{"라섹":[1300000,1300000]}},"s-eye-34":{"hn":"강남밝은미소안과의원","cl":"의원","dr":3,"sdr":3,"est":"20190919","addr":"서울특별시 강남구 강남대로 408, YBM강남센터 3층 (역삼동)","url":"","spec":{"안과":3},"price":{}},"s-eye-35":{"hn":"하이안과의원","cl":"의원","dr":2,"sdr":2,"est":"20210916","addr":"서울특별시 강남구 도산대로 119, 3층 (신사동)","url":"","spec":{"안과":2},"price":{}},"s-eye-36":{"hn":"온누리스마일안과의원","cl":"의원","dr":3,"sdr":3,"est":"20140714","addr":"서울특별시 서초구 서초대로77길 3, 아라타워 지하 2층 (서초동)","url":"koreasmilecenter.com","spec":{"안과":3},"price":{}},"s-eye-37":{"hn":"에스앤유안과의원","cl":"의원","dr":3,"sdr":3,"est":"20200825","addr":"서울특별시 강남구 강남대로 624, ICT TOWER 3, 12층 (신사동)","url":"","spec":{"안과":3},"price":{}},"s-eye-38":{"hn":"잘보는성모안과의원","cl":"의원","dr":5,"sdr":5,"est":"20150414","addr":"서울특별시 강서구 강서로 242, 3,4층 301,401,402,403호 (화곡동, 강서힐스테이트)","url":"","spec":{"안과":5},"price":{}},"s-eye-39":{"hn":"365밝은안과의원","cl":"의원","dr":6,"sdr":6,"est":"20130418","addr":"서울특별시 관악구 신림로 350, 3층 302호 (신림동, 서원프라자,태영아파트)","url":"http://www.365goodeye.com","spec":{"안과":6},"price":{}},"s-eye-41":{"hn":"퍼스트삼성안과의원","cl":"의원","dr":2,"sdr":2,"est":"20210823","addr":"서울특별시 서초구 서초대로78길 22, 홍우제2빌딩 5층 (서초동)","url":"","spec":{"안과":2},"price":{}},"s-eye-42":{"hn":"성모진안과의원","cl":"의원","dr":2,"sdr":2,"est":"20210325","addr":"서울특별시 서초구 강남대로 337, 1,4,5층 (서초동)","url":"","spec":{"안과":2},"price":{}},"s-eye-43":{"hn":"강남성모원안과의원","cl":"의원","dr":3,"sdr":3,"est":"20220525","addr":"서울특별시 서초구 강남대로85길 5, 대유빌딩 2층 (반포동)","url":"","spec":{"안과":3},"price":{}},"s-eye-44":{"hn":"서울베스트안과의원","cl":"의원","dr":4,"sdr":4,"est":"20091222","addr":"서울특별시 동대문구 왕산로 171, 2층,3층,5층, 왕산로32길 171, 2층,3층,5층, 왕산로32길 7, 4층(용두동) (제기동)","url":"http://www.seoulbesteye.co.kr/","spec":{"안과":4},"price":{}},"s-eye-45":{"hn":"압구정안과의원","cl":"의원","dr":3,"sdr":3,"est":"20190507","addr":"서울특별시 서초구 강남대로 597, 진미선빌딩 3,4층 (잠원동)","url":"","spec":{"안과":3},"price":{}},"s-eye-46":{"hn":"글로리서울안과의원","cl":"의원","dr":2,"sdr":2,"est":"20100714","addr":"서울특별시 서초구 서초대로74길 3, 글로리빌딩 2~6층 (서초동)","url":"http://www.gloryeye.com","spec":{"안과":2},"price":{}},"s-eye-47":{"hn":"강남조은눈안과의원","cl":"의원","dr":3,"sdr":3,"est":"20091016","addr":"서울특별시 강남구 테헤란로 107, 비전타워 7층,9층 (역삼동)","url":"http://www.visionclinic.co.kr","spec":{"안과":3},"price":{}},"s-eye-48":{"hn":"혜안서울안과의원","cl":"의원","dr":3,"sdr":3,"est":"20191115","addr":"서울특별시 강남구 테헤란로 528, 슈페리어타워 4,9층 (대치동)","url":"","spec":{"안과":3},"price":{}},"s-eye-49":{"hn":"강남이룸안과의원","cl":"의원","dr":1,"sdr":1,"est":"20191125","addr":"서울특별시 강남구 강남대로 358, 강남358타워B1층 (역삼동)","url":"www.erumeye.co.kr","spec":{"안과":1},"price":{}},"s-eye-50":{"hn":"강남서울밝은안과의원","cl":"의원","dr":3,"sdr":3,"est":"20101231","addr":"서울특별시 강남구 강남대로 390, 18층 (역삼동, 미진프라자)","url":"http://www.smartlasik.co.kr","spec":{"안과":3},"price":{}},"s-eye-51":{"hn":"호랑이안과의원","cl":"의원","dr":2,"sdr":2,"est":"20220829","addr":"서울특별시 양천구 오목로 345, 목동 슬로우스퀘어 3층 301~308,312~317호 (목동)","url":"","spec":{"안과":2},"price":{}},"s-eye-52":{"hn":"서울글로우안과의원","cl":"의원","dr":2,"sdr":2,"est":"20220609","addr":"서울특별시 노원구 노해로 507, 와우쇼핑몰 3층 (상계동)","url":"","spec":{"안과":2},"price":{}},"s-eye-53":{"hn":"강남아이원스안과의원","cl":"의원","dr":1,"sdr":1,"est":"20210617","addr":"서울특별시 서초구 사평대로 368, 중앙화촌빌딩 5,6층 (서초동)","url":"","spec":{"안과":1},"price":{}},"s-eye-54":{"hn":"라움스마일안과의원","cl":"의원","dr":2,"sdr":2,"est":"20260127","addr":"서울특별시 강남구 테헤란로4길 5, 해암빌딩 3층,5층 일부호 (역삼동)","url":"","spec":{"안과":2},"price":{}},"s-eye-55":{"hn":"서울온안과의원","cl":"의원","dr":4,"sdr":4,"est":"20220803","addr":"서울특별시 은평구 통일로 750, 3,4층 (불광동)","url":"","spec":{"안과":4},"price":{}},"s-eye-56":{"hn":"타임안과의원","cl":"의원","dr":3,"sdr":3,"est":"20220510","addr":"서울특별시 구로구 경인로 387, 5층 (고척동)","url":"","spec":{"안과":3},"price":{}},"s-eye-57":{"hn":"힐링안과의원","cl":"의원","dr":1,"sdr":1,"est":"20180701","addr":"서울특별시 강남구 강남대로 470, 808타워 10,11층 (역삼동)","url":"","spec":{"안과":1},"price":{}},"s-eye-58":{"hn":"연세솔안과의원","cl":"의원","dr":3,"sdr":3,"est":"20231212","addr":"서울특별시 강서구 화곡로68길 3, 6층 (등촌동)","url":"","spec":{"안과":3},"price":{}},"s-eye-59":{"hn":"드림성모안과의원","cl":"의원","dr":4,"sdr":4,"est":"20021031","addr":"서울특별시 강남구 강남대로 390, 14층 (역삼동, 미진프라자)","url":"http://www.hellolasik.com","spec":{"안과":4},"price":{}},"s-eye-60":{"hn":"공덕안과의원","cl":"의원","dr":4,"sdr":4,"est":"20110908","addr":"서울특별시 마포구 만리재로 14, 한국사회복지회관 르네상스타워 3,17층 (17층 1호, 8호)호 (공덕동)","url":"","spec":{"안과":4},"price":{}},"s-eye-61":{"hn":"엠에스안과의원","cl":"의원","dr":4,"sdr":4,"est":"20240429","addr":"서울특별시 서초구 신반포로 189, 반포쇼핑타운 4동 2,5층 2층 1~39,42~45, 5층 2호 (잠원동)","url":"","spec":{"안과":4},"price":{}},"s-eye-62":{"hn":"연세장안과의원","cl":"의원","dr":4,"sdr":4,"est":"20160217","addr":"서울특별시 서대문구 수색로 56, 성공타워1 407,408,606,607호 (북가좌동)","url":"","spec":{"안과":4},"price":{}},"s-eye-63":{"hn":"삼성스마일안과의원","cl":"의원","dr":3,"sdr":3,"est":"20260311","addr":"서울특별시 서초구 강남대로 214, 구구빌딩 2층~4층 (양재동)","url":"","spec":{"안과":3},"price":{}},"s-eye-64":{"hn":"명동성모안과의원","cl":"의원","dr":4,"sdr":4,"est":"19990410","addr":"서울특별시 중구 남대문로 92, 한국전력공사 3층 (을지로2가)","url":"http://www.4eye.co.kr","spec":{"안과":4},"price":{}},"s-eye-65":{"hn":"태릉밝은안과의원","cl":"의원","dr":3,"sdr":3,"est":"20160707","addr":"서울특별시 노원구 동일로 1005, 3,4층 (공릉동, 대정빌딩)","url":"http://www.the-eye.co.kr/","spec":{"안과":3},"price":{}},"s-eye-66":{"hn":"우리들안과의원","cl":"의원","dr":3,"sdr":3,"est":"20030617","addr":"서울특별시 중랑구 망우로 418, 서울정형외과 3,4층 (망우동)","url":"","spec":{"안과":3},"price":{}},"s-eye-67":{"hn":"서울플러스안과의원","cl":"의원","dr":4,"sdr":4,"est":"20120827","addr":"서울특별시 노원구 노해로 482, 6층 (상계동, 덕영빌딩)","url":"http://www.seoulpluseye.com/","spec":{"안과":4},"price":{}},"s-eye-68":{"hn":"서울삼성안과의원","cl":"의원","dr":4,"sdr":4,"est":"20230906","addr":"서울특별시 광진구 천호대로 670, 썬-타워빌딩 지하1층, 1층 (구의동)","url":"","spec":{},"price":{}},"s-eye-69":{"hn":"엘리트안과의원","cl":"의원","dr":3,"sdr":3,"est":"19990506","addr":"서울특별시 서대문구 신촌로 99, 엘리트빌딩 11,12층 (창천동)","url":"","spec":{"안과":3},"price":{}},"s-eye-70":{"hn":"강남센트럴안과의원","cl":"의원","dr":2,"sdr":2,"est":"20210412","addr":"서울특별시 강남구 테헤란로 333, 신도벤처타워 9층 (역삼동)","url":"","spec":{"안과":2},"price":{}},"s-eye-71":{"hn":"강남도쿄안과의원","cl":"의원","dr":1,"sdr":1,"est":"20250508","addr":"서울특별시 강남구 강남대로 442, 5층 (역삼동)","url":"","spec":{"안과":1},"price":{}},"s-eye-72":{"hn":"바른눈서울안과의원","cl":"의원","dr":4,"sdr":4,"est":"20210927","addr":"서울특별시 강남구 테헤란로 401, 남경센타 9층 1,2호 (삼성동)","url":"","spec":{"안과":4},"price":{}},"s-eye-73":{"hn":"서울퍼시픽안과의원","cl":"의원","dr":2,"sdr":2,"est":"20210318","addr":"서울특별시 중랑구 면목로 492, 주연빌딩 2층, 4(일부) 층 (상봉동)","url":"","spec":{"안과":2},"price":{}},"s-eye-74":{"hn":"첫눈애안과의원","cl":"의원","dr":2,"sdr":2,"est":"20210305","addr":"서울특별시 강남구 테헤란로 332, HJ타워 (건물표기)5층 (역삼동)","url":"","spec":{"안과":2},"price":{}},"s-eye-75":{"hn":"아이숲안과의원","cl":"의원","dr":5,"sdr":5,"est":"20190902","addr":"서울특별시 성동구 왕십리로 410, D동 B103호,  B104호,  B105호,  B106호 (하왕십리동, 센트라스)","url":"","spec":{"안과":5},"price":{}},"s-eye-76":{"hn":"예스안과의원","cl":"의원","dr":4,"sdr":4,"est":"20230918","addr":"서울특별시 양천구 등촌로 32, 목동 태영프라자 4,5층 401,402,503호 (목동)","url":"http://www.yes-oph.com/","spec":{"안과":4},"price":{}},"s-eye-77":{"hn":"41타워안과의원","cl":"의원","dr":2,"sdr":2,"est":"20140616","addr":"서울특별시 양천구 목동동로 293, 현대41타워 504,505호 (목동)","url":"www.41towereye.com","spec":{"안과":2},"price":{}},"s-eye-78":{"hn":"유망안과의원","cl":"의원","dr":3,"sdr":3,"est":"20160307","addr":"서울특별시 강서구 공항대로 543, 2층 207~11호 (염창동, 센터스퀘어)","url":"","spec":{"안과":3},"price":{}},"s-eye-79":{"hn":"서울리더스안과의원","cl":"의원","dr":4,"sdr":4,"est":"20220209","addr":"서울특별시 강서구 화곡로 157, Roi빌딩 2층 203,204호 (화곡동)","url":"","spec":{"안과":4},"price":{}},"s-eye-80":{"hn":"노원빛사랑안과의원","cl":"의원","dr":3,"sdr":3,"est":"19981202","addr":"서울특별시 노원구 노해로 492, 6층 (상계동, 프린스빌딩)","url":"","spec":{"안과":3},"price":{}},"s-eye-81":{"hn":"연세우리안과의원","cl":"의원","dr":1,"sdr":1,"est":"20161214","addr":"서울특별시 노원구 동일로203가길 29, 207호 (중계동, 브라운스톤중계)","url":"https://yswoorieye.com","spec":{"안과":1},"price":{}},"s-eye-82":{"hn":"하나안과의원","cl":"의원","dr":4,"sdr":4,"est":"20040116","addr":"서울특별시 강북구 도봉로 34, 5층 (미아동, 트레지오빌딩)","url":"","spec":{"안과":4},"price":{}},"s-eye-83":{"hn":"강남서울안과의원","cl":"의원","dr":1,"sdr":1,"est":"20070508","addr":"서울특별시 서초구 강남대로 437, 대원빌딩 10층 (서초동)","url":"","spec":{"안과":1},"price":{}},"s-eye-84":{"hn":"영등포원안과의원","cl":"의원","dr":2,"sdr":2,"est":"20220215","addr":"서울특별시 영등포구 경인로 841, 서울영등포동4가우체국 3층 (영등포동4가)","url":"","spec":{"안과":2},"price":{}},"s-eye-85":{"hn":"아이유안과의원","cl":"의원","dr":3,"sdr":3,"est":"20231011","addr":"서울특별시 송파구 삼전로 84, IU아이유빌딩 2,6,8층 (삼전동)","url":"","spec":{"안과":3},"price":{}},"s-eye-86":{"hn":"압구정에스앤비안과의원","cl":"의원","dr":2,"sdr":2,"est":"20180402","addr":"서울특별시 강남구 논현로 842, 압구정빌딩 9층 903호 (신사동)","url":"","spec":{"안과":2},"price":{}},"s-eye-87":{"hn":"서울눈에빛안과의원","cl":"의원","dr":3,"sdr":3,"est":"20220310","addr":"서울특별시 구로구 경인로 661, 신도림1차푸르지오 104동 401호 (신도림동)","url":"","spec":{"내과":1,"안과":2},"price":{}},"s-eye-88":{"hn":"명동서울밝은안과의원","cl":"의원","dr":1,"sdr":1,"est":"20071231","addr":"서울특별시 중구 퇴계로 123, 하이헤리엇 8층 (충무로2가)","url":"http://www.premiumlasik.kr","spec":{"안과":1},"price":{}},"s-eye-89":{"hn":"서울연세안과의원","cl":"의원","dr":3,"sdr":3,"est":"20050428","addr":"서울특별시 구로구 디지털로32길 79, 조영빌딩 7층 (구로동)","url":"www.lasik75.com/","spec":{"안과":3},"price":{}},"s-eye-90":{"hn":"서울안과의원","cl":"의원","dr":2,"sdr":2,"est":"20040103","addr":"서울특별시 서대문구 통일로 464, 3층 (홍제동)","url":"http://www.lasik-lasek.co.kr/main/main.php","spec":{"안과":2},"price":{}},"s-eye-91":{"hn":"대치연세안과의원","cl":"의원","dr":3,"sdr":3,"est":"20100625","addr":"서울특별시 강남구 도곡로 408, 디마크 빌딩 5층 501호,502호,503호,504호호 (대치동)","url":"","spec":{"안과":3},"price":{}},"s-eye-92":{"hn":"아이플러스안과의원","cl":"의원","dr":2,"sdr":2,"est":"20091218","addr":"서울특별시 서초구 강남대로 435, 주류성빌딩 5, 10층 (서초동)","url":"http://www.seouleyeplus.com/","spec":{"안과":2},"price":{}},"s-eye-94":{"hn":"이인섭안과의원","cl":"의원","dr":3,"sdr":3,"est":"19850507","addr":"서울특별시 성북구 동소문로 125, 7층 (동선동4가, 골든타워)","url":"","spec":{"안과":3},"price":{}},"s-eye-95":{"hn":"빛사랑안과의원","cl":"의원","dr":1,"sdr":1,"est":"20020420","addr":"서울특별시 서대문구 신촌로 91, 2층 (창천동)","url":"","spec":{"안과":1},"price":{}},"s-eye-96":{"hn":"매일연안과의원","cl":"의원","dr":3,"sdr":3,"est":"20260304","addr":"서울특별시 중랑구 사가정로 386, 6,7,8층 (면목동)","url":"","spec":{"안과":3},"price":{}},"s-eye-98":{"hn":"그랜드성모안과의원","cl":"의원","dr":2,"sdr":2,"est":"20230718","addr":"서울특별시 강동구 올림픽로 654, 2층 1호 (천호동)","url":"","spec":{"안과":2},"price":{}},"s-eye-99":{"hn":"예본안과의원","cl":"의원","dr":2,"sdr":2,"est":"20031124","addr":"서울특별시 종로구 종로 78, 미려빌딩 (종로2가)","url":"http://www.yebon.com/yebon_06_01.asp","spec":{"안과":2},"price":{}},"s-dental-1":{"hn":"석플란트치과병원","cl":"치과병원","dr":22,"sdr":0,"est":"20070521","addr":"서울특별시 강남구 도산대로 238, 1~14층 (논현동)","url":"http://www.seokplant.com/","spec":{"구강악안면외과":1,"통합치의학과":4},"price":{"임플란트(지르코니아)":[370000,1250000],"임플란트(PFM)":[370000,1000000]}},"s-dental-2":{"hn":"하루플란트치과의원","cl":"치과의원","dr":11,"sdr":0,"est":"20230427","addr":"서울특별시 서초구 강남대로 411, 7~10층 (서초동)","url":"","spec":{"치과보철과":4,"통합치의학과":3},"price":{}},"s-dental-3":{"hn":"원데이치과의원","cl":"치과의원","dr":13,"sdr":0,"est":"20060203","addr":"서울특별시 강남구 강남대로 438, 스타플렉스 13, 15층 (역삼동)","url":"http://www.onedaydent.com","spec":{"구강악안면외과":2,"치과교정과":1,"치주과":2,"통합치의학과":2},"price":{}},"s-dental-4":{"hn":"똑똑플란트치과의원","cl":"치과의원","dr":11,"sdr":0,"est":"20170822","addr":"서울특별시 강남구 강남대로 432, 점프밀라노 6층,7층 (역삼동)","url":"","spec":{"구강악안면외과":1,"치주과":1,"통합치의학과":3},"price":{}},"s-dental-5":{"hn":"젊어지는치과의원","cl":"치과의원","dr":12,"sdr":0,"est":"20111230","addr":"서울특별시 서초구 강남대로 405, 통영빌딩 5, 9, 12층 (서초동)","url":"","spec":{"구강악안면외과":4,"치과보철과":4,"치과보존과":1,"통합치의학과":2},"price":{}},"s-dental-6":{"hn":"더와이즈치과병원","cl":"치과병원","dr":9,"sdr":0,"est":"20090717","addr":"서울특별시 강서구 화곡로 186, 세웅빌딩 1~5,6층일부층 (화곡동)","url":"http://","spec":{"구강악안면외과":1,"치과보철과":4,"치과교정과":1,"치주과":2,"통합치의학과":1},"price":{"임플란트(지르코니아)":[890000,2000000],"임플란트(PFM)":[890000,2000000]}},"s-dental-7":{"hn":"연세힐치과병원","cl":"치과병원","dr":11,"sdr":0,"est":"20260827","addr":"서울특별시 강서구 강서로 231, 1~2층 (화곡동, 우장산역 해링턴 타워)","url":"","spec":{"구강악안면외과":3,"치과보철과":1,"치주과":1,"치과보존과":1,"통합치의학과":3},"price":{}},"s-dental-8":{"hn":"미니쉬치과병원","cl":"치과병원","dr":3,"sdr":0,"est":"20181207","addr":"서울특별시 강남구 언주로 728, 2~5,7~10층 (논현동)","url":"","spec":{"통합치의학과":2},"price":{"임플란트(지르코니아)":[1200000,1200000]}},"s-dental-9":{"hn":"서울대학교치과병원","cl":"치과병원","dr":234,"sdr":7,"est":"20040901","addr":"서울특별시 종로구 대학로 101, (연건동)","url":"http://www.snudh.or.kr","spec":{"마취통증의학과":7,"구강악안면외과":13,"치과보철과":14,"치과교정과":7,"소아치과":6,"치주과":12,"치과보존과":13,"구강내과":7,"영상치의학과":5,"구강병리과":3,"예방치과":2,"통합치의학과":3},"price":{"임플란트(지르코니아)":[2019870,5451140],"임플란트(PFM)":[1959810,4952520]}},"s-dental-10":{"hn":"365서울원탑치과의원","cl":"치과의원","dr":9,"sdr":0,"est":"20180727","addr":"서울특별시 강서구 강서로 179, 3,4층 302, 401, 402호 (화곡동)","url":"","spec":{"구강악안면외과":2,"치과보철과":1,"치과교정과":1,"통합치의학과":5},"price":{}},"s-dental-11":{"hn":"신촌다인치과병원","cl":"치과병원","dr":8,"sdr":0,"est":"20150313","addr":"서울특별시 마포구 신촌로 94, 10층,11층 (노고산동, 그랜드플라자)","url":"http://www.ysdain.com/","spec":{"구강악안면외과":1,"치과보철과":2,"치과교정과":1,"치주과":1,"치과보존과":2,"통합치의학과":4},"price":{"임플란트(지르코니아)":[900000,1600000]}},"s-dental-13":{"hn":"서울숙면치과의원","cl":"치과의원","dr":9,"sdr":0,"est":"20190611","addr":"서울특별시 강북구 도봉로 342, 3층 (번동)","url":"","spec":{"구강악안면외과":1,"치과보철과":1,"치과교정과":1,"치주과":1,"치과보존과":1,"통합치의학과":4},"price":{}},"s-dental-14":{"hn":"강남새로치과의원","cl":"치과의원","dr":9,"sdr":0,"est":"20230127","addr":"서울특별시 강남구 강남대로 428, 만이빌딩 6층,9층 (역삼동)","url":"","spec":{"구강악안면외과":2,"치과보철과":4,"치과교정과":1,"치과보존과":2,"통합치의학과":1},"price":{}},"s-dental-15":{"hn":"원더플치과의원","cl":"치과의원","dr":5,"sdr":0,"est":"20190618","addr":"서울특별시 강북구 도봉로 48, 엠파크 6, 7층 (미아동)","url":"","spec":{"구강악안면외과":2,"치과보철과":1,"통합치의학과":3},"price":{}},"s-dental-16":{"hn":"라이브치과병원","cl":"치과병원","dr":5,"sdr":0,"est":"20150713","addr":"서울특별시 강남구 논현로105길 48, 1,2층 (역삼동)","url":"","spec":{"치과보철과":1,"치과교정과":1,"통합치의학과":1},"price":{"임플란트(지르코니아)":[380000,2000000]}},"s-dental-17":{"hn":"강남클리어치과의원","cl":"치과의원","dr":4,"sdr":0,"est":"20170823","addr":"서울특별시 강남구 강남대로 406, GLASS TOWER 8,17층 (역삼동)","url":"","spec":{"구강악안면외과":1,"치주과":1,"치과보존과":1,"통합치의학과":1},"price":{}},"s-dental-18":{"hn":"삼육치과병원","cl":"치과병원","dr":6,"sdr":0,"est":"19921112","addr":"서울특별시 동대문구 망우로 82, (휘경동)","url":"http://www.sadh.co.kr","spec":{"구강악안면외과":1,"치과교정과":1,"치주과":2,"구강내과":1},"price":{"임플란트(PFM)":[1800000,2500000],"임플란트(지르코니아)":[2000000,2500000]}},"s-dental-20":{"hn":"티유치과의원","cl":"치과의원","dr":4,"sdr":0,"est":"20190808","addr":"서울특별시 서초구 서초대로77길 54, 서초더블유타워 12,13층 (서초동)","url":"","spec":{"통합치의학과":2},"price":{}},"s-dental-21":{"hn":"화이트드림치과의원","cl":"치과의원","dr":9,"sdr":0,"est":"20140828","addr":"서울특별시 서초구 서초대로77길 17, BLOCK77 5층 (서초동)","url":"","spec":{"치과교정과":3,"치주과":1,"통합치의학과":2},"price":{}},"s-dental-22":{"hn":"고르다치과의원","cl":"치과의원","dr":7,"sdr":0,"est":"20160706","addr":"서울특별시 서초구 강남대로69길 10, 8,9층 (서초동)","url":"","spec":{"구강악안면외과":1,"치과보철과":2,"치주과":1,"통합치의학과":3},"price":{}},"s-dental-23":{"hn":"세이프플란트치과의원","cl":"치과의원","dr":3,"sdr":0,"est":"20110223","addr":"서울특별시 강남구 테헤란로25길 7, 창성재단빌딩 4층 (역삼동)","url":"http://www.knlondon.com","spec":{"구강악안면외과":1,"통합치의학과":1},"price":{}},"s-dental-25":{"hn":"강남레옹치과의원","cl":"치과의원","dr":5,"sdr":0,"est":"20140522","addr":"서울특별시 서초구 강남대로 415, 대동빌딩 4층 (서초동)","url":"","spec":{"구강악안면외과":1,"치과보철과":1,"치주과":1,"통합치의학과":1},"price":{}},"s-dental-26":{"hn":"굿플란트치과의원","cl":"치과의원","dr":6,"sdr":0,"est":"20181121","addr":"서울특별시 송파구 거마로 4, 4,5,6층 (거여동)[*미고시]","url":"","spec":{"치과보철과":3,"치주과":1},"price":{}},"s-dental-27":{"hn":"루시드치과의원","cl":"치과의원","dr":1,"sdr":0,"est":"20230322","addr":"서울특별시 강남구 논현로 606, 동도빌딩 3,4층 302,401,402호 (논현동)","url":"","spec":{},"price":{}},"s-dental-28":{"hn":"더뉴치과의원","cl":"치과의원","dr":2,"sdr":0,"est":"20200206","addr":"서울특별시 서초구 강남대로 567, 1, 2층 (잠원동)","url":"","spec":{"치과교정과":1},"price":{}},"s-dental-29":{"hn":"명동콤비치과의원","cl":"치과의원","dr":7,"sdr":0,"est":"20150602","addr":"서울특별시 중구 남대문로 84, 8층 (남대문로2가)","url":"http://www.combident.co.kr/","spec":{"치과보철과":1,"치과교정과":1,"치과보존과":2,"통합치의학과":4},"price":{}},"s-dental-30":{"hn":"시스템치과의원","cl":"치과의원","dr":2,"sdr":0,"est":"20041018","addr":"서울특별시 중구 명동7길 21, 3층 (을지로2가, 명동아르누보센텀)","url":"","spec":{"구강악안면외과":1,"통합치의학과":1},"price":{}},"s-dental-31":{"hn":"루센트치과의원","cl":"치과의원","dr":5,"sdr":0,"est":"20021224","addr":"서울특별시 서초구 사평대로 368, 중앙화촌빌딩 3, 4층일부층 (서초동)","url":"","spec":{"치과보철과":1,"치과교정과":3,"통합치의학과":3},"price":{}},"s-dental-32":{"hn":"강북다인치과의원","cl":"치과의원","dr":6,"sdr":0,"est":"20030214","addr":"서울특별시 도봉구 도봉로 488, 지상2층,지상5층 (창동)","url":"http://www.daindental.co.kr/","spec":{"치과교정과":1,"치과보존과":1,"통합치의학과":2},"price":{}},"s-dental-33":{"hn":"블랑쉬치과의원","cl":"치과의원","dr":3,"sdr":0,"est":"20230629","addr":"서울특별시 서초구 강남대로 531, 7층 (반포동)","url":"","spec":{"통합치의학과":1},"price":{}},"s-dental-34":{"hn":"에스플란트치과병원","cl":"치과병원","dr":4,"sdr":0,"est":"20080411","addr":"서울특별시 강남구 도산대로 410, 5,7,8층 (청담동)","url":"http://www.splant.co.kr","spec":{"치과보철과":3},"price":{"임플란트(지르코니아)":[1700000,2500000],"임플란트(PFM)":[1300000,2300000]}},"s-dental-35":{"hn":"서울오브치과병원","cl":"치과병원","dr":7,"sdr":0,"est":"20240930","addr":"서울특별시 송파구 백제고분로 196, 4층~5층 (삼전동)","url":"","spec":{"구강악안면외과":1,"치과보철과":4,"치과보존과":1,"통합치의학과":4},"price":{"임플란트(지르코니아)":[1000000,1000000]}},"s-dental-36":{"hn":"플란치과의원","cl":"치과의원","dr":5,"sdr":0,"est":"20210614","addr":"서울특별시 강남구 도산대로 119, 15층 (신사동)","url":"","spec":{"치주과":1,"예방치과":1,"통합치의학과":2},"price":{}},"s-dental-37":{"hn":"노원 강북예치과병원","cl":"치과병원","dr":4,"sdr":0,"est":"20040102","addr":"서울특별시 노원구 노해로81길 5-6, 노원스퀘어 5-7층 (상계동)","url":"","spec":{},"price":{"임플란트(지르코니아)":[690000,1800000]}},"s-dental-38":{"hn":"강남애프터치과의원","cl":"치과의원","dr":6,"sdr":0,"est":"20191030","addr":"서울특별시 서초구 강남대로 441, 서산빌딩 11층 (서초동)","url":"","spec":{"구강악안면외과":1,"통합치의학과":3},"price":{}},"s-dental-39":{"hn":"레브치과의원","cl":"치과의원","dr":5,"sdr":0,"est":"20250515","addr":"서울특별시 강남구 도산대로 138, 지하2층 (논현동)","url":"","spec":{"치과교정과":1,"치주과":1},"price":{}},"s-dental-40":{"hn":"연세유라인치과의원","cl":"치과의원","dr":1,"sdr":0,"est":"20171113","addr":"서울특별시 강남구 강남대로 390, 1701호 (역삼동)","url":"http://www.ulineclinic.com","spec":{"치과보존과":1},"price":{}},"s-dental-41":{"hn":"서울리마치과의원","cl":"치과의원","dr":6,"sdr":0,"est":"20110608","addr":"서울특별시 서초구 서초대로 396, 강남빌딩 8층 (서초동)","url":"","spec":{"구강악안면외과":1,"치과보철과":1,"치과교정과":2,"치과보존과":1,"통합치의학과":1},"price":{}},"s-dental-42":{"hn":"스탠다드치과의원","cl":"치과의원","dr":3,"sdr":0,"est":"20161007","addr":"서울특별시 송파구 송파대로 562, 9층 (신천동, 한빛프라자,삼성웰리스아파트)","url":"","spec":{"구강악안면외과":1,"치과보철과":2},"price":{}},"s-dental-43":{"hn":"한그루치과병원","cl":"치과병원","dr":7,"sdr":0,"est":"20130821","addr":"서울특별시 마포구 마포대로 78, 자람빌딩 3층 (도화동)","url":"","spec":{"구강악안면외과":1,"치과보철과":2,"치과교정과":1,"치주과":1,"치과보존과":2,"통합치의학과":2},"price":{"임플란트(PFM)":[1200000,2500000],"임플란트(지르코니아)":[1450000,2750000]}},"s-dental-46":{"hn":"제아치과의원","cl":"치과의원","dr":5,"sdr":0,"est":"20151127","addr":"서울특별시 강남구 강남대로 416, (역삼동, 창림빌딩, 4층)","url":"","spec":{"구강악안면외과":2,"치과보철과":1,"치주과":1,"통합치의학과":2},"price":{}},"s-dental-47":{"hn":"강북백상치과의원","cl":"치과의원","dr":4,"sdr":0,"est":"20090506","addr":"서울특별시 강북구 한천로 1083, 광산타워 1층 (수유동)","url":"","spec":{"치과보철과":2,"치과보존과":1,"통합치의학과":1},"price":{}},"s-dental-48":{"hn":"아프로치과의원","cl":"치과의원","dr":5,"sdr":0,"est":"20231013","addr":"서울특별시 도봉구 마들로13길 61, 씨드큐브 창동 5층 501-1, 501-6~8호 (창동)","url":"","spec":{"구강악안면외과":1,"치과보철과":2,"치주과":1,"치과보존과":1},"price":{}},"s-dental-49":{"hn":"서울센텀턱구강내과치과의원","cl":"치과의원","dr":3,"sdr":0,"est":"20211012","addr":"서울특별시 영등포구 국제금융로6길 26, 한국노총 3층 (여의도동)","url":"","spec":{"구강내과":3},"price":{}},"s-dental-50":{"hn":"킹콩치과의원","cl":"치과의원","dr":2,"sdr":0,"est":"20080205","addr":"서울특별시 강남구 강남대로 390, 미진프라자 지하1층 (역삼동)","url":"","spec":{"치주과":1},"price":{}},"s-dental-51":{"hn":"365서울탑치과의원","cl":"치과의원","dr":5,"sdr":0,"est":"20180328","addr":"서울특별시 은평구 불광로 15, 2층 (대조동)","url":"","spec":{"구강악안면외과":1,"치과보철과":1,"통합치의학과":5},"price":{}},"s-dental-52":{"hn":"목동예치과병원","cl":"치과병원","dr":10,"sdr":0,"est":"19971215","addr":"서울특별시 양천구 오목로 199, (신정동)","url":"","spec":{"구강악안면외과":1,"치과보철과":2,"소아치과":1,"치과보존과":1},"price":{"임플란트(PFM)":[1550000,2450000],"임플란트(지르코니아)":[1550000,2550000]}},"s-dental-53":{"hn":"서울하이안치과의원","cl":"치과의원","dr":4,"sdr":0,"est":"20080403","addr":"서울특별시 도봉구 도봉로 482, 4,5층 (창동)","url":"","spec":{"구강악안면외과":1,"치과보철과":1,"치과교정과":1,"치과보존과":1},"price":{}},"s-dental-54":{"hn":"뉴엔치과의원","cl":"치과의원","dr":5,"sdr":0,"est":"20230323","addr":"서울특별시 서초구 강남대로 405, 통영빌딩 3층 (서초동)","url":"","spec":{"치과보철과":1,"치과교정과":2,"통합치의학과":2},"price":{}},"s-dental-55":{"hn":"더바름치과병원","cl":"치과병원","dr":3,"sdr":0,"est":"20190319","addr":"서울특별시 송파구 석촌호수로 61, 트리지움상가 201호 (잠실동)","url":"","spec":{"통합치의학과":2},"price":{"임플란트(지르코니아)":[1190000,1290000]}},"s-dental-56":{"hn":"가야치과병원","cl":"치과병원","dr":4,"sdr":0,"est":"20040102","addr":"서울특별시 서초구 방배로 177, 4~6층 (방배동)","url":"","spec":{"치과보철과":1,"치주과":1},"price":{"임플란트(지르코니아)":[1400000,1400000]}},"s-dental-57":{"hn":"서울0.1치과의원","cl":"치과의원","dr":4,"sdr":0,"est":"20231004","addr":"서울특별시 송파구 백제고분로 488, 호련빌딩 2~6층 (방이동)","url":"","spec":{"치과보철과":1,"치과보존과":1,"통합치의학과":1},"price":{}},"s-dental-58":{"hn":"르치과의원","cl":"치과의원","dr":2,"sdr":0,"est":"20200213","addr":"서울특별시 강남구 봉은사로 108, 9층 (역삼동)","url":"","spec":{"치과교정과":1,"통합치의학과":2},"price":{}},"s-dental-59":{"hn":"퍼펙트치과의원","cl":"치과의원","dr":3,"sdr":0,"est":"20161226","addr":"서울특별시 강남구 테헤란로4길 5, 해암빌딩 4층 (역삼동)","url":"","spec":{"통합치의학과":3},"price":{}},"s-dental-60":{"hn":"언제나이든치과의원","cl":"치과의원","dr":4,"sdr":0,"est":"20090527","addr":"서울특별시 관악구 난곡로 210, 3층 (신림동)","url":"","spec":{"치과교정과":1,"치과보존과":1,"통합치의학과":1},"price":{}},"s-dental-61":{"hn":"르블랑치과의원","cl":"치과의원","dr":4,"sdr":0,"est":"20231120","addr":"서울특별시 서초구 강남대로 519, 도충빌딩 2층 (반포동)","url":"","spec":{"치과보철과":2,"통합치의학과":2},"price":{}},"s-dental-62":{"hn":"리엔장치과의원","cl":"치과의원","dr":5,"sdr":0,"est":"20240423","addr":"서울특별시 서초구 강남대로 403, 13층 (서초동)","url":"","spec":{"구강악안면외과":1,"치과교정과":1,"통합치의학과":1},"price":{}},"s-dental-63":{"hn":"연세굿플란트치과의원","cl":"치과의원","dr":6,"sdr":0,"est":"20180808","addr":"서울특별시 송파구 송파대로 438, 5층 (송파동)","url":"","spec":{"구강악안면외과":1,"치과교정과":1,"치과보존과":1,"통합치의학과":2},"price":{}},"s-dental-64":{"hn":"서울더자연치과의원","cl":"치과의원","dr":2,"sdr":0,"est":"20190218","addr":"서울특별시 강동구 양재대로 1631, 2,3층 (명일동)","url":"","spec":{"통합치의학과":1},"price":{}},"s-dental-65":{"hn":"서울센텀치과의원","cl":"치과의원","dr":2,"sdr":0,"est":"20200902","addr":"서울특별시 서초구 강남대로 621, 잠원동 K-TOWER 6층 (잠원동)","url":"","spec":{"통합치의학과":1},"price":{}},"s-dental-66":{"hn":"이유구강악안면외과치과의원","cl":"치과의원","dr":4,"sdr":0,"est":"20161004","addr":"서울특별시 강남구 도산대로 108, 2층,지하2층일부층 (논현동)","url":"","spec":{"구강악안면외과":3,"치과교정과":1},"price":{}},"s-dental-67":{"hn":"연세유라인치과의원","cl":"치과의원","dr":1,"sdr":0,"est":"20120102","addr":"서울특별시 관악구 신림로 340, 8층 (신림동, 르네상스쇼핑몰)","url":"www.ulineclinic.com","spec":{"통합치의학과":1},"price":{}},"s-dental-68":{"hn":"웃는내일치과교정과치과의원","cl":"치과의원","dr":5,"sdr":0,"est":"20030802","addr":"서울특별시 강남구 남부순환로 2909, 여천빌딩 3층 (대치동)","url":"http://www.smilefuture.com/","spec":{"치과교정과":5},"price":{}},"s-dental-69":{"hn":"미유치과의원","cl":"치과의원","dr":4,"sdr":0,"est":"20160325","addr":"서울특별시 서초구 강남대로 439, 유화빌딩 12층(서초동) (서초동)","url":"","spec":{"구강악안면외과":1,"치과보철과":2,"치과보존과":1},"price":{}},"s-dental-70":{"hn":"서울큰사랑치과의원","cl":"치과의원","dr":3,"sdr":0,"est":"20170920","addr":"서울특별시 서초구 서초대로38길 12, 4층 (서초동, 마제스타시티,힐스테이트서리풀)","url":"","spec":{"치주과":1},"price":{}},"s-dental-71":{"hn":"이편한세상치과의원(강서점)","cl":"치과의원","dr":3,"sdr":0,"est":"20180817","addr":"서울특별시 강서구 양천로 460, 2층 (등촌동)","url":"","spec":{"치과교정과":1,"통합치의학과":1},"price":{}},"s-dental-72":{"hn":"크림치과의원","cl":"치과의원","dr":3,"sdr":0,"est":"20170302","addr":"서울특별시 서초구 서초대로 411, 지하1층 B1,2호 (서초동, GT TOWER)","url":"http://www.creamdental.com","spec":{"치과보철과":1,"치주과":1},"price":{}},"s-dental-73":{"hn":"서울위드치과의원","cl":"치과의원","dr":1,"sdr":0,"est":"20130520","addr":"서울특별시 강남구 강남대로 376, 10층 (역삼동)","url":"http://www.withden.com","spec":{},"price":{}},"s-dental-74":{"hn":"다인치과병원","cl":"치과병원","dr":4,"sdr":0,"est":"20100120","addr":"서울특별시 노원구 노해로 507, 5층 (상계동, 와우쇼핑몰)","url":"http://ndaindental.co.kr","spec":{"영상치의학과":2},"price":{}},"s-dental-75":{"hn":"연세꿈꾸는치과교정과의원","cl":"치과의원","dr":3,"sdr":0,"est":"20250203","addr":"서울특별시 강동구 양재대로 1360, 포레온스테이션5 2층 2091~2097호 (둔촌동)","url":"","spec":{"치과교정과":1,"소아치과":1,"통합치의학과":2},"price":{}},"s-dental-76":{"hn":"살림의료복지사회적협동조합살림의원","cl":"의원","dr":3,"sdr":3,"est":"20120807","addr":"서울특별시 은평구 서오릉로 149, 세웅그룹빌딩 2층 좌측호 (구산동)","url":"","spec":{"내과":1,"가정의학과":2},"price":{}},"s-dental-77":{"hn":"서울권치과의원","cl":"치과의원","dr":5,"sdr":0,"est":"20190305","addr":"서울특별시 송파구 오금로 420, 유니팜코리아 3층 (가락동)","url":"","spec":{"구강악안면외과":1,"치과보존과":1,"통합치의학과":3},"price":{}},"s-dental-78":{"hn":"오른치과의원","cl":"치과의원","dr":4,"sdr":0,"est":"20201124","addr":"서울특별시 노원구 동일로 1405, KB금융 노원Plaza 4층 (상계동)","url":"","spec":{"구강악안면외과":1,"치과보철과":1,"통합치의학과":2},"price":{}},"s-dental-79":{"hn":"잎사귀치과병원","cl":"치과병원","dr":2,"sdr":0,"est":"20150701","addr":"서울특별시 서대문구 명물길 32, 준성빌딩 2,3층 (창천동)","url":"","spec":{},"price":{"임플란트(PFM)":[1400000,1400000],"임플란트(지르코니아)":[1500000,1500000]}},"s-dental-80":{"hn":"닥터재일치과의원","cl":"치과의원","dr":4,"sdr":0,"est":"20210219","addr":"서울특별시 강동구 올림픽로 796, 2층 (암사동)","url":"","spec":{"구강악안면외과":1,"치과보철과":1,"치과보존과":2,"통합치의학과":1},"price":{}},"s-dental-81":{"hn":"더스퀘어치과의원","cl":"치과의원","dr":4,"sdr":0,"est":"20171020","addr":"서울특별시 종로구 종로3길 17, B101,B204호 (청진동, D타워)","url":"","spec":{"치과교정과":1,"통합치의학과":2},"price":{}},"s-dental-82":{"hn":"유씨강남치과의원","cl":"치과의원","dr":1,"sdr":0,"est":"20080304","addr":"서울특별시 강남구 봉은사로 209, 4층, 5층 (논현동)","url":"","spec":{},"price":{}},"s-dental-83":{"hn":"서울탑치과병원","cl":"치과병원","dr":5,"sdr":0,"est":"20081104","addr":"서울특별시 서초구 효령로 261-1, 4,5,6,7층 (서초동)","url":"http://topimplant.co.kr","spec":{"구강악안면외과":1,"치과보존과":1,"통합치의학과":1},"price":{"임플란트(지르코니아)":[800000,2500000]}},"s-dental-85":{"hn":"관악365일치과의원","cl":"치과의원","dr":2,"sdr":0,"est":"20160624","addr":"서울특별시 관악구 관악로 234, 2층 (봉천동, 서울남부교회)","url":"","spec":{"치주과":1},"price":{}},"s-dental-86":{"hn":"최앤이치과의원","cl":"치과의원","dr":2,"sdr":0,"est":"20060714","addr":"서울특별시 중구 세종대로 39, 대한서울상공회의소 (남대문로4가)","url":"http://www.choi-lee.com/","spec":{"통합치의학과":1},"price":{}},"s-dental-87":{"hn":"강남이플러스치과의원","cl":"치과의원","dr":2,"sdr":0,"est":"20081230","addr":"서울특별시 강남구 테헤란로 411, (삼성동, 성담빌딩 5층일부)","url":"","spec":{"통합치의학과":1},"price":{}},"s-dental-88":{"hn":"굿모닝치과의원","cl":"치과의원","dr":1,"sdr":0,"est":"20050311","addr":"서울특별시 동대문구 망우로 78, 2층 (휘경동)","url":"","spec":{},"price":{}},"s-dental-89":{"hn":"서울리멤버치과의원","cl":"치과의원","dr":3,"sdr":0,"est":"20221206","addr":"서울특별시 관악구 남부순환로 1830, 5층 (봉천동)","url":"","spec":{"치과보철과":1,"통합치의학과":1},"price":{}},"s-dental-90":{"hn":"연세스카이치과의원","cl":"치과의원","dr":3,"sdr":0,"est":"20240324","addr":"서울특별시 동대문구 왕산로 200, 5층 511-516호 (전농동)","url":"","spec":{"구강악안면외과":1,"치주과":1,"치과보존과":1},"price":{}},"s-dental-91":{"hn":"서울페이스21치과병원","cl":"치과병원","dr":4,"sdr":1,"est":"20210327","addr":"서울특별시 강남구 강남대로 390, 미진프라자 21층 (역삼동)","url":"","spec":{"마취통증의학과":1,"구강악안면외과":2,"치과교정과":1,"통합치의학과":1},"price":{"임플란트(지르코니아)":[1100000,1800000],"임플란트(PFM)":[1100000,1800000]}},"s-dental-92":{"hn":"삼성리더스치과의원","cl":"치과의원","dr":3,"sdr":0,"est":"20160226","addr":"서울특별시 구로구 중앙로 64, (고척동, 고척프라자)","url":"","spec":{"구강악안면외과":1,"통합치의학과":1},"price":{}},"s-dental-93":{"hn":"메이크치과의원","cl":"치과의원","dr":1,"sdr":0,"est":"20240830","addr":"서울특별시 강남구 봉은사로 151, 분데스 언주 3층층 (논현동)","url":"","spec":{},"price":{}},"s-dental-94":{"hn":"연세디자인치과의원","cl":"치과의원","dr":2,"sdr":0,"est":"20201218","addr":"서울특별시 영등포구 도신로 228, 2층 (신길동)","url":"","spec":{"치주과":1,"통합치의학과":1},"price":{}},"s-dental-95":{"hn":"하나로치과의원","cl":"치과의원","dr":2,"sdr":0,"est":"20240530","addr":"서울특별시 종로구 종로 33, 그랑서울 TOWER1-OA-501 일부호 (청진동)","url":"","spec":{"구강악안면외과":1},"price":{}},"s-dental-96":{"hn":"스마일디치과의원","cl":"치과의원","dr":1,"sdr":0,"est":"20180920","addr":"서울특별시 강남구 강남대로 624, ICT TOWER 13층 (신사동)","url":"https://smiled.co.kr/","spec":{"치과교정과":1},"price":{}},"s-dental-97":{"hn":"압구정민치과의원","cl":"치과의원","dr":2,"sdr":0,"est":"20140520","addr":"서울특별시 강남구 언주로 848, 화경빌딩 3층 (신사동)","url":"","spec":{"치과보철과":1},"price":{}},"s-dental-98":{"hn":"서울매스티지치과의원","cl":"치과의원","dr":1,"sdr":0,"est":"20101213","addr":"서울특별시 강남구 봉은사로 105, 1층, 6층 (논현동, 동양빌딩)","url":"http://www.smdclinic.com","spec":{"통합치의학과":1},"price":{}},"s-dental-99":{"hn":"디테일탑치과의원","cl":"치과의원","dr":3,"sdr":0,"est":"20210621","addr":"서울특별시 은평구 통일로 876, 4~7층 (불광동)","url":"","spec":{"통합치의학과":3},"price":{}},"s-dental-100":{"hn":"서울우리원치과의원","cl":"치과의원","dr":3,"sdr":0,"est":"20120413","addr":"서울특별시 중구 청계천로 100, 2층 (수표동, 시그니쳐타워)","url":"","spec":{},"price":{}}},"med":{"라섹":1400000,"라식":2800000,"임플란트(지르코니아)":1190000,"임플란트(PFM)":1300000},"cnt":{"라섹":3,"라식":1,"임플란트(지르코니아)":17,"임플란트(PFM)":9}};
+const HIRA_YM="2026.10";
+REAL.forEach(x=>{x.h=HIRA.h[x.id]||null});
+const REAL_BY_ID=Object.fromEntries(REAL.map(x=>[x.id,x]));
+const wonF=n=>n>=10000?Math.round(n/10000).toLocaleString()+"만원":n.toLocaleString()+"원";
+const estF=e=>e?e.slice(0,4)+"."+e.slice(4,6):"–";
+function realFiltered(){const q=S.q.trim();return REAL.filter(x=>(S.type==="all"||x.type===S.type)&&(x.name+x.gu+x.dong).includes(q))}
+const findH=id=>DB.hospitals.find(x=>x.id===id)||REAL_BY_ID[id];
+
+/* ---------- 지표 계산 ---------- */
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const pubReviews=hid=>DB.reviews.filter(r=>r.hospital_id===hid&&r.status!=="hidden");
+const repliesOf=rid=>DB.replies.filter(p=>p.review_id===rid);
+function metrics(h){
+  const avg=REGION_AVG[h.region];
+  const priceRows=Object.entries(h.prices).map(([item,p])=>({item,p,avg:avg[item],dev:Math.round((p-avg[item])/avg[item]*100)}));
+  const maxDev=Math.max(...priceRows.map(r=>r.dev));
+  const avgStaff=h.staff.reduce((a,b)=>a+b,0)/h.staff.length;
+  const turnover=Math.round(h.leaves/avgStaff*100);
+  const cs=DB.cases.filter(c=>c.hospital_id===h.id);
+  const rs=pubReviews(h.id).filter(r=>r.status==="published");
+  const ver=rs.filter(r=>r.verified);const verNeg=ver.filter(r=>r.rating<=2).length;
+  const negRatio=ver.length?verNeg/ver.length:0;
+  const comps=[
+    {key:"price",name:"비급여 가격 편차",max:25,pts:Math.round(clamp(maxDev/20*25,0,25)),
+      val:`지역 평균 대비 ${maxDev>0?"+":""}${maxDev}%`,src:"심평원 비급여 진료비용",
+      lim:"가격이 높다는 것은 장비·보증 범위 차이일 수 있으며, 진료 품질과 직접 관련이 없습니다."},
+    {key:"turnover",name:"직원 회전율 (12개월)",max:25,pts:Math.round(clamp((turnover-30)/50*25,0,25)),
+      val:`연간 퇴사 ${h.leaves}명 / 평균 ${avgStaff.toFixed(0)}명 = ${turnover}%`,src:"국민연금 가입 사업장",
+      lim:"국민연금 가입자만 집계되며, 의료진과 행정 인력을 구분하지 않습니다."},
+    {key:"doctor",name:"의료진 변동 (3년)",max:15,pts:clamp(h.doctor_changes_3y*4,0,15),
+      val:`대표자·전문의 변동 ${h.doctor_changes_3y}회`,src:"심평원 병원정보서비스",
+      lim:"확장·분원 개설로 인한 정상적인 변동도 포함됩니다."},
+    {key:"case",name:"판결·분쟁 이력",max:15,pts:clamp(cs.reduce((a,c)=>a+({final:9,settled:5,pending:3}[c.status]),0),0,15),
+      val:cs.length?`${cs.length}건 (확정 ${cs.filter(c=>c.status==="final").length})`:"확인된 이력 없음",src:"공개 판결문",
+      lim:"진료 건수가 많은 병원일수록 분쟁 건수가 많을 수 있습니다. 확정 전 사건은 가중치를 낮게 반영합니다."},
+    {key:"review",name:"인증 후기 부정 비율",max:20,pts:Math.round(negRatio*(ver.length>=3?20:10)),
+      val:ver.length?`인증 ${ver.length}건 중 부정 ${verNeg}건${ver.length<3?" · 표본 부족(가중치 절반)":""}`:"인증 후기 없음",src:"이용자 인증 후기",
+      lim:"인증 후기 3건 미만이면 가중치를 절반으로 낮춥니다."}
+  ];
+  const score=comps.reduce((a,c)=>a+c.pts,0);
+  return {priceRows,maxDev,turnover,avgStaff,cs,rs,ver,comps,score,level:score>=60?"high":score>=30?"mid":"low"};
+}
+const LEVEL={high:"주의",mid:"확인 필요",low:"낮음"};
+const sigTag=(lv,score)=>`<span class="sig ${lv}">${LEVEL[lv]}${score!=null?` <span class="num">${score}</span>`:""}</span>`;
+
+/* ---------- 상태 ---------- */
+const S={type:"all",q:"",pass:{type:null},unlocked:new Set(),expanded:new Set(),admin:"h1"};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const stars=n=>"★".repeat(n)+"☆".repeat(5-n);
+const won=n=>`${n.toLocaleString()}만원`;
+const canRead=rid=>S.pass.type==="30d"||S.pass.type==="life"||S.unlocked.has(rid);
+function toast(m){const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
+function hospitalsFiltered(){return DB.hospitals.filter(h=>(S.type==="all"||h.type===S.type)&&(h.name+h.region).includes(S.q.trim()))}
+
+/* ---------- 라우팅 (#home, #list, #method, #admin, #hosp-h1) ---------- */
+function route(){
+  const h=location.hash.slice(1)||"home";
+  const view=h.startsWith("hosp-")?"hosp":h;
+  document.querySelectorAll("[data-nav]").forEach(a=>a.setAttribute("aria-current",(a.dataset.nav===view||(view==="hosp"&&a.dataset.nav==="list"))?"page":"false"));
+  $("#writeBtn").hidden=view==="admin";
+  renderPass();
+  const v=$("#view");
+  if(view==="list")v.innerHTML=listView();
+  else if(view==="method")v.innerHTML=methodView();
+  else if(view==="admin")v.innerHTML=adminView();
+  else if(view==="hosp"){const id=h.slice(5);v.innerHTML=REAL_BY_ID[id]?realView(id):DB.hospitals.some(x=>x.id===id)?hospView(id):`<div class="empty">병원을 찾을 수 없습니다.</div>`}
+  else v.innerHTML=homeView();
+}
+function go(hash){if(location.hash==="#"+hash)route();else location.hash=hash;scrollTo({top:0})}
+function renderPass(){const c=$("#passChip");
+  c.textContent={null:"열람권 없음",ad:`광고로 ${S.unlocked.size}건 열람`,"30d":"30일 열람권 이용 중",life:"평생 열람권 이용 중"}[S.pass.type];
+  c.classList.toggle("on",!!S.pass.type)}
+
+/* ---------- 뷰: 홈·목록 (실데이터) ---------- */
+function typeTabs(){return `<div class="tabs" role="group" aria-label="진료 분야">${[["all","전체"],["eye","안과 · 라섹·라식"],["dental","치과 · 교정·임플란트"]].map(([k,v])=>`<button data-type="${k}" aria-pressed="${S.type===k}">${v}</button>`).join("")}</div>`}
+function homeView(){
+  const R=realFiltered();
+  const byM=[...R].sort((a,b)=>b.m-a.m);
+  const byL=[...R].sort((a,b)=>b.l-a.l||b.m-a.m);
+  const byDr=[...R].filter(x=>x.h).sort((a,b)=>b.h.dr-a.h.dr);
+  const priced=R.filter(x=>x.h&&Object.keys(x.h.price).length);
+  const gu={};R.forEach(x=>{gu[x.gu]=gu[x.gu]||{n:0,m:0,eye:0,dental:0};gu[x.gu].n++;gu[x.gu].m+=x.m;gu[x.gu][x.type]++});
+  const guRows=Object.entries(gu).sort((a,b)=>b[1].n-a[1].n);
+  const rc=(title,src,rows,fmt)=>`<section class="card"><div class="card-h"><h2>${title}</h2><span class="src">${src}</span></div><div class="card-b"><ol class="rank">${
+    rows.slice(0,7).map((x,i)=>`<li><button data-hosp="${x.id}"><span class="n">${i+1}</span><span><span class="nm">${esc(x.name)}</span><span class="mt">서울 ${esc(x.gu)} · ${TYPE[x.type]}</span></span><span class="v">${fmt(x)}</span></button></li>`).join("")||`<li class="empty">해당 병원이 없습니다.</li>`}</ol>
+    <a href="#list" class="src">전체 ${R.length}곳 보기 →</a></div></section>`;
+  return `
+  <section class="hero">
+    <span class="eyebrow">수술 전 병원 확인 · 서울</span>
+    <h1>공공데이터로 먼저 확인하고,<br>인증된 후기로 한 번 더 확인하세요.</h1>
+    <p>서울 안과·치과 중 직원 수 상위 각 100곳에 국민연금 가입 사업장 데이터와 심평원 의료진·비급여 가격 데이터를 실제로 반영했습니다. 판결 이력과 인증 후기가 갖춰지면 ‘주의 신호 지수’로 합산됩니다.</p>
+    <form class="searchbox" id="searchForm" role="search"><input type="search" id="q" placeholder="병원명 또는 지역(예: 강남구)" value="${esc(S.q)}" aria-label="병원 검색"><button class="btn primary" type="submit">검색</button></form>
+  </section>
+  ${typeTabs()}
+  <div class="grid3">
+    ${rc("직원 수 상위","국민연금 · "+NPS_YM,byM,x=>`<span class="num">${x.m}명</span>`)}
+    ${rc("이번 달 퇴사자가 많은 곳","한 달치 · 참고용",byL,x=>`<span class="num">${x.l}명</span>`)}
+    ${rc("의사가 많은 곳","심평원 · "+HIRA_YM,byDr,x=>`<span class="num">${x.h.dr}명</span>`)}
+  </div>
+  <section class="card">
+    <div class="card-h"><h2>구별 분포</h2><span class="src">직원 수 상위 안과·치과 각 100곳 중 · 국민연금 ${NPS_YM}</span></div>
+    <div class="tablewrap"><table><thead><tr><th>구</th><th class="r">병원 수</th><th class="r">안과</th><th class="r">치과</th><th class="r">총 직원 수</th></tr></thead>
+    <tbody>${guRows.slice(0,10).map(([g,v])=>`<tr><td>서울 ${esc(g)}</td><td class="r num">${v.n}</td><td class="r num">${v.eye}</td><td class="r num">${v.dental}</td><td class="r num">${v.m.toLocaleString()}</td></tr>`).join("")}</tbody></table></div>
+  </section>
+  ${(()=>{
+    const PT={eye:["안과","라섹·라식","의원급 안과 가격은 아직 연동되지 않았습니다."],dental:["치과","임플란트","의원급 치과 가격은 아직 연동되지 않았습니다. 치아교정은 API 공개 항목에 포함되어 있지 않습니다."]};
+    const allP=REAL.filter(x=>x.h&&Object.keys(x.h.price).length);
+    const t=S.ptab||(S.type==="dental"?"dental":"eye");const [,items,note]=PT[t];
+    const ps=allP.filter(x=>x.type===t);
+    return `<section class="card">
+    <div class="card-h"><h2>비급여 가격 공개 병원</h2><span class="src">심평원 비급여진료비정보 · ${HIRA_YM} 조회 · 병원급만 제공</span></div>
+    <div class="tabs" role="tablist" aria-label="분야" style="padding-inline:8px">${Object.entries(PT).map(([k,v])=>`<button role="tab" data-ptab="${k}" aria-pressed="${k===t}" aria-selected="${k===t}">${v[0]} · ${v[1]} <span class="num">${allP.filter(x=>x.type===k).length}</span></button>`).join("")}</div>
+    <div class="tablewrap"><table><thead><tr><th>병원</th><th>지역</th><th>항목</th><th class="r">가격</th><th class="r">서울 병원급 중앙값</th></tr></thead>
+    <tbody>${ps.flatMap(x=>Object.entries(x.h.price).map(([k,v])=>`<tr class="click" data-hosp="${x.id}" tabindex="0"><td><b>${esc(x.name)}</b></td><td>${esc(x.gu)}</td><td>${k}</td><td class="r num">${v[0]===v[1]?wonF(v[0]):wonF(v[0])+" ~ "+wonF(v[1])}</td><td class="r num">${wonF(HIRA.med[k])}</td></tr>`)).join("")||`<tr><td colspan="5" class="empty">가격을 공개한 병원이 없습니다.</td></tr>`}</tbody></table></div>
+    <div class="card-b" style="padding-top:10px"><p class="fine">심평원 오픈 API는 병원급(병원·치과병원) 가격만 제공합니다. ${note}</p></div>
+  </section>`})()}
+  <section class="card"><div class="card-h"><h2>모든 지표가 연동되면 이렇게 보입니다</h2><span class="src">예시 데이터 · 가상 병원</span></div>
+    <div class="card-b" style="padding-top:12px;display:grid;gap:10px"><p class="fine" style="font-size:13.5px">비급여 가격, 의료진 변동, 판결 이력, 인증 후기, 병원 반론까지 연동된 완성 화면을 가상 병원으로 확인할 수 있습니다.</p>
+    <div class="row">${DB.hospitals.slice(0,4).map(h=>`<button class="btn sm" data-hosp="${h.id}">${esc(h.name)} (예시)</button>`).join("")}</div></div></section>
+  <div class="disclaimer"><b>지표를 읽는 방법</b><span>국민연금 가입자 수는 4대보험에 가입한 직원 수로, 개인사업자인 대표원장과 미가입 인력은 포함되지 않습니다. 지점마다 별도 사업장으로 집계됩니다. 직원 수는 병원 규모를 보여줄 뿐 진료 수준과는 관계가 없습니다. 자세한 내용은 <a href="#method">지표 설명</a>을 참고하세요.</span></div>`;
+}
+
+function listView(){
+  const R=realFiltered().sort((a,b)=>b.m-a.m);
+  return `<section class="hero"><span class="eyebrow">병원 찾기 · 서울</span><h1>서울 안과·치과 직원 수 상위 200곳</h1>
+    <p>국민연금 가입 사업장 ${NPS_YM} 기준 실제 데이터를 직원 수가 많은 순서로 보여줍니다.</p>
+    <form class="searchbox" id="searchForm" role="search"><input type="search" id="q" placeholder="병원명 또는 지역" value="${esc(S.q)}" aria-label="병원 검색"><button class="btn primary" type="submit">검색</button></form></section>
+  ${typeTabs()}
+  <section class="card"><div class="tablewrap"><table>
+    <thead><tr><th class="r">#</th><th>병원</th><th>지역</th><th>구분</th><th class="r">직원 수</th><th class="r">당월 입사</th><th class="r">당월 퇴사</th><th class="r">의사 수</th><th class="r">전문의</th><th>개설일</th><th>비급여</th></tr></thead>
+    <tbody>${R.map((x,i)=>`<tr class="click" data-hosp="${x.id}" tabindex="0"><td class="r num">${i+1}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.gu)} ${esc(x.dong)}</td><td>${TYPE[x.type]} · ${esc(x.kind)}</td>
+      <td class="r num">${x.m}</td><td class="r num">${x.j}</td><td class="r num ${x.l>x.j?"up":""}">${x.l}</td><td class="r num">${x.h?x.h.dr:"–"}</td><td class="r num">${x.h?x.h.sdr:"–"}</td><td class="num">${x.h?estF(x.h.est):"–"}</td><td>${x.h&&Object.keys(x.h.price).length?`<span class="badge ver">공개</span>`:`<span class="src">${x.h&&!/의원/.test(x.h.cl)?"미등록":"의원급 준비 중"}</span>`}</td></tr>`).join("")||`<tr><td colspan="11" class="empty">조건에 맞는 병원이 없습니다.</td></tr>`}</tbody>
+  </table></div></section>
+  <p class="fine">출처: 국민연금공단 국민연금 가입 사업장 내역(${NPS_YM}), 건강보험심사평가원 병원정보서비스·의료기관별상세정보서비스·비급여진료비정보조회서비스(${HIRA_YM} 조회). 심평원 정보는 병원명과 소재 구로 매칭했으며, 매칭되지 않은 곳은 ‘–’로 표시했습니다. 병원명에 ‘안과’·‘치과’가 포함된 서울 소재 의료업 사업장 중 가입 상태인 곳을 직원 수 순으로 추렸습니다.</p>`;
+}
+
+function pending(title,src,text){return `<section class="card"><div class="card-h"><h3>${title}</h3><span class="src">${src}</span></div><div class="card-b" style="padding-top:12px"><span class="badge plain">연동 예정</span><p class="fine" style="margin-top:6px">${text}</p></div></section>`}
+/* 외부 글: EXT[병원id] = [{src:'blog'|'cafe'|'news', title, url, date:'YYYY-MM-DD', snippet, author}] — 네이버 검색 API 연동 시 채움 */
+const EXT={"s-eye-2":[{"src":"blog","title":"실로암 안과병원","url":"https://blog.naver.com/dean0694/222356941526","date":"2021-05-19","snippet":"위치한 실로암 안과병원에 다녀왔다 병원 크기에서부터 알 수 있겠지만 오전 10시에 예약을 하고... 조금 실망스럽다 그러난 다른 많은 의사분들은 안 그렇게 지 그분도 오늘은 컨디션이 좋지 않았겠지 ","author":"BIGME","kind":"neg"},{"src":"blog","title":"실로암안과병원 백내장,망막수술로 입원수술","url":"https://blog.naver.com/housenoopy/221560327126","date":"2019-06-12","snippet":"결과 : 좀 후회가됩니다.... 아빠의 수술은 성공적이지 못하것같습니다 시력은 더 많이 떨어졌고,,,,,,,,ㅠㅠ 병원가서 말해도....별 반응도없어요...하하하하하하하하하하 실로암안과병원 아빠 백","author":"내일은 더 빛날거야","kind":"neg"}],"s-eye-5":[{"src":"blog","title":"라식 재수술 후기 하늘안과의원","url":"https://blog.naver.com/ss377z/223355440903","date":"2024-02-16","snippet":"강남하늘안과는 그당시 공장형이었는데 그것 때문인가 뭐지 내가 너무 어려서?! 온갓 이유를 생각했지만 알수있는 것은 없어 병원에 연락 재수술을 해준다고 한다 하지만 그당시 병원에 신뢰 1도...","author":"잼잼잼","kind":"neg"},{"src":"blog","title":"하늘안과 라식 후기 내돈내산 라식 한달 차","url":"https://blog.naver.com/cappybara/224434297264","date":"2026-10-07","snippet":"하늘안과는 전 의료진이 시력교정술을 했다는데 그건 딱히 선택에 도움은 안됐다. 진짜 단순하게 라식... 나중에 재수술 한번 더 가능하다 하셨음 ㅎ ✌ 이땐 좋았는데..) 의사 선생님이랑 상담 다 하","author":"ఇఇఇ","kind":"exp"},{"src":"blog","title":"[강남] 내돈내산 하늘안과의원 스마일라식 1년차 난시 검진 솔직후....","url":"https://blog.naver.com/nolcoach2513/224042334065","date":"2025-10-15","snippet":"5로 개선됐지만 여전히 난시는 남아있음을 진단받았습니다 다만 해당 수치는 재수술이 필요한 정도는... 신경써봐야겠습니다 #스마일라식후기 #하늘안과의원스마일 #하늘안과의원후기 #하늘안과의원강남...","author":"놀코치의 놀루션","kind":"exp"}],"s-eye-33":[{"src":"blog","title":"송파 혜민안과 정말 최악이다.","url":"https://blog.naver.com/genius586/221713823215","date":"2019-11-20","snippet":"친정아버지가 변호사셔서 소송 걸려고 준비했었는데 시아버님이 말리셨고 그 거지병원에서 마지막... 후회되는게 이 병원 좋다고 모시고 와서 수술하시게한겁니다. #혜민안과 #송파 혜민안과 #경찰병원 혜민","author":"genius586님의 블로그","kind":"neg"}],"s-eye-45":[{"src":"blog","title":"[내돈내산] 눈 뜬 장님의 렌즈삽입술과 재수술후기 (Feat. 압구정안과....","url":"https://blog.naver.com/sohxx__/224300510110","date":"2026-05-29","snippet":"돌아가서 재수술 한적이 있는데 추후에 또 돌아간다면 1. 같은... 새롭게 재수술 엔딩 .. 원래는 1년까지만 무상as가능인데 쌤이... 이렇게 재수술 날짜를 잡고 수술 후 지금은 아주 잘 살고있음","author":"머니머니해도머니","kind":"neg"},{"src":"cafe","title":"압구정안과의원 ICL렌즈삽입술 찐 후기 (라섹 후 ICL 재수술)","url":"https://cafe.naver.com/gangmok/1301239","date":"","snippet":"ㅎ 그래서 재수술 결심했음. 이번에는 괜찮은 곳에서 실패 없이 하고 싶은 마음에안과를 고르는데 그간... 있는 압구정안과의원원장님 이력도 겁나 화려하고 경력도 많은데다가원래 병원이 압구정역에 있었는","author":"강남엄마 VS 목동엄마 ★ 베스트맘 따라잡기","kind":"exp"}],"s-eye-94":[{"src":"blog","title":"돈암동 이인섭안과 어찌이런일이..","url":"https://blog.naver.com/namo2003/80052545474","date":"2008-06-04","snippet":"아버지가 돈암동 이인섭 안과에서 레이저시술을 받고 나오다가 거기 실수로 넘어져서 얼굴과 다리에... 실망입니다. 대 실망. 보호자에게 기분나쁘게 와서 따지냐고, 자기도 기분나빠서 못하겠다는 느낌을.","author":"Organizer","kind":"neg"}],"s-dental-79":[{"src":"blog","title":"[신촌 잎사귀치과 병원] 공장형 사랑니 발치 전문이라는 최악의 치....","url":"https://blog.naver.com/llorolvll/224119772091","date":"2025-12-23","snippet":"공장식 사랑니 발치 병원, 최악의 치과 소개 [신촌 잎사귀 치과 병원] 다른분들 리뷰 그니까요... 저도... 너무 후회 했을 듯. 사랑니 발치 후 주의 사항 거기서 나눠주는 주의 사항입니다. 치아","author":"이것 저것 이장님","kind":"neg"},{"src":"blog","title":"사랑니공장 신촌잎사귀치과에서 매복사랑니 발치후기...","url":"https://blog.naver.com/minihyunz/224278697500","date":"2026-05-08","snippet":"신촌역에서 꽤 멀었던 신촌잎사귀치과병원.. 아예 사랑니발치센터가 따로 있더라 싱기방기 후기보니깐... 뽑은거 후회했다 내가 끝까지 품고갈걸... 쿨패치 붙이고 출근하기... 사랑니 뽑고 1일차...","author":"미니현즈 냠로그","kind":"exp"},{"src":"blog","title":"사랑니 공장 신촌 잎사귀치과 ㅣ 사랑니 두 개 발치한 솔직 후기 (내....","url":"https://blog.naver.com/mindmap_jang/224010709436","date":"2025-09-16","snippet":"신촌 잎사귀치과병원. 동생 부부도 거기서 사랑니를 뺐다고. 검색해보니 ‘사랑니 성지’. 홈페이지... 할 일 다 해주셨고, 공장식 빠른 처리에 집중한다는 걸 예상하고 간 거라 실망은 아니었다. 다만","author":"아무거나 사기엔 월급이 너무 소중하다.","kind":"exp"}],"s-eye-1":[{"src":"blog","title":"투데이라섹내돈내산 | 누네안과 투데이라섹 후기","url":"https://blog.naver.com/resolutionth/224163936974","date":"2026-01-29","snippet":"혹시라도 재수술이나 노안 같은 걸 생각하면각막을 너무 많이... 안과 정도…?? 그런데 그 중에 누네안과가 제일 접근성도 좋고 병원이... ㅋㅋㅋㅋㅋㅋㅋㅋ #누네안과 #누네안과병원 #서울누네안과 #","author":"내사랑귀염둥이 키티","kind":"exp"},{"src":"blog","title":"31세 망막박리 치료기 (3)_누네안과병원 공막돌륭술 수술 후기","url":"https://blog.naver.com/jinmk91/222302381667","date":"2021-04-07","snippet":"남편과 병원에 도착해서 입원수속을 밟았다 이틀 전 수술날짜 잡을 때 수술에 필요한 내과검사들은 마쳤기때문에 추가적인 안과검진만... 수술 후 검사 중 최악의 검사는 안압검사 뜬 눈에 바람이 훅! 불","author":"쏘세지","kind":"exp"},{"src":"cafe","title":"누네안과 스마트라식 3일차 후기예요 ㅎㅎ","url":"https://cafe.naver.com/sanmoschool/1309694","date":"","snippet":"중이에요 ㅠㅠ 그래도 수술한 건 후회 없고 장점이 확실해서 만족해요 내원 치료도 잘 챙겨주셔서 며칠만 더 지나면 더 편해질 것 같고 아직 클라이밍은 안 해봤는데 앞으로 운동할 때는 훨씬 편할 것 같","author":"베베라운지","kind":"exp"}],"s-eye-3":[{"src":"blog","title":"비앤빛 안과의원 라섹 수술 후기 (리얼 내돈내산 수술 경험담😭)","url":"https://banana-nana.tistory.com/381","date":"2025-12-16","snippet":"비앤빛 안과에서 처방 받아온 안약들과 안약 담을 수 있는 귀여운 파우치. 앞으로 한달간 함께 잘... 것을 후회함. 나 안경 안 불편했는데 안경 쓰고 살걸ㅠㅠㅠㅠ 눈 아파!!! 눈 시려!!!! 통증","author":"눈누난나","kind":"exp"}],"s-eye-20":[{"src":"blog","title":"내돈내산 스마일라식 후기 (당일 검진 / 수술) - [클리어서울안과의....","url":"https://blog.naver.com/zo_man_jangja/224350349556","date":"2026-07-18","snippet":"들어가는 안과 중 클리어서울안과의원에 연락하여 7월 15일(수)로 예약 잡았지만 불안하고 할 거 없다는... 겪었다 후회하는 게 싫어가지구... + 주기적으로 결막염이 오는 사람임 그냥 각막강화술도","author":"백원장자","kind":"exp"}],"s-eye-22":[{"src":"blog","title":"스마일프로 내돈내산 찐후기 (강남 눈에미소안과)","url":"https://blog.naver.com/nivxdutfr/224449100509","date":"2026-10-21","snippet":"같다.) 눈에미소안과를 선택한 이유는 1. 스마일라식 경력... 점, 재수술이 무료로 진행되는 점 등이 모두 마음에 들었다. 후기를 보니... 끼고 강남을 걷는 건 생각보다 낯부끄러웠다. ㅋㅋ 수술","author":"징징이의 세계여행","kind":"exp"},{"src":"cafe","title":"강남 눈에미소안과 스마일프로 후기 남겨봅니다!","url":"https://cafe.naver.com/navercafezz/758978","date":"","snippet":"2 정도 나왔어요 목표 시력이 1.0이였던지라 이정도면 진짜 감지덕지입니두.. 수술한거 후회 하나두 없고 왜 이제야 했나 싶을 정도예요 스마일프로 고민 중인 분들 시간 더 허비하지 마시고 바로 수술","author":"『라준사』라식라섹을 준비하는사람들 - 라섹,렌즈삽입술,백내장","kind":"exp"}],"s-eye-72":[{"src":"blog","title":"바른눈서울안과 성인 사시 수술 후기","url":"https://blog.naver.com/yezziaco/223707944229","date":"2024-12-28","snippet":"저는 재수술의 케이스라 유착도 있어서 그걸 풀면서 진행해야 하기... 최근 눈 재발 없이 평생 유지해 줘 내 눈들아 ㅠㅠ 나 이제 더는 못해 … 성인사시수술 고민이신 분들 바른눈서울안과 진짜 추천드","author":"노는게 제일 좋아 _ 예지로그","kind":"exp"}],"s-eye-77":[{"src":"blog","title":"목동 41타워안과 라섹 후기(내돈내산!!)","url":"https://blog.naver.com/tmddmsdi/222653816822","date":"2022-02-21","snippet":"시력이 퇴행했을 경우 재수술 1번 정도는 가능하다고 하셨어요! 또한 라식은 불가능하다고... 41타워안과 블로그에서 가져왔어요! 라섹수술하고 난 후 죽다가 살아난 후기 라섹수술하고 신나서 찍은 사진","author":"하루의 승은","kind":"exp"}],"s-eye-89":[{"src":"blog","title":"구로 서울연세안과(ㅅㅇㅇㅅ안과) 라섹 검안, 수술 후기","url":"https://blog.naver.com/lazyryn/224176445296","date":"2026-02-08","snippet":"오쁘가 열심히 찾아주었다 오쁘가 여러군데 추천해줘서 병원예약을 잡는데 구로의 서울연세안과가... 다행히도 나는 각막 뚱땡이여서 라식, 라섹 둘 다 가능하고 나중에 근시퇴행이 온다면 재수술까지...","author":"lazzzyy blog","kind":"exp"}],"s-eye-92":[{"src":"blog","title":"강남 아이플러스안과 라섹 후기","url":"https://blog.naver.com/imyourgamja/224445597078","date":"2026-10-18","snippet":"아이플러스안과의원에서 내가 제일 좋았던 점은, 모든 직원분들이 사근 사근 친절하시고 검사 및... 등의 최악의 후기들을 들었어서 내심 걱정했었는데 이틀차 오전에 잠깐 눈시림이 있었던 것 말고는 통증","author":"청춘아 조금만 천천히 .. ^‿^","kind":"exp"}],"s-eye-95":[{"src":"blog","title":"신촌 빛사랑안과 라섹후기","url":"https://blog.naver.com/euoobin/224279933506","date":"2026-05-09","snippet":"좋다 (그럴일 없겠지만, 혹시나 추후에 재수술 필요하게 되더라도 충분하다고 하셨움.) 검사 마치고... 수술 후기들 꼭 잘 찾아보시길! 위의 모든 것들을 고려한 나의 후기는 빛사랑안과 김평식 대표원","author":"Record by beenie","kind":"exp"}],"s-eye-99":[{"src":"blog","title":"[라섹 후기] 종로 예본안과 :: 내돈내산 눈물의 라섹 후기","url":"https://blog.naver.com/cherryinla/222938997797","date":"2022-11-26","snippet":"진짜 초긴장상태에 내가 이걸 왜 한다했을까 후회하며 누워있는데 돌고래 인형을 주셔서 꼭 껴안고... 끗 #라섹 #라식 #스마일라식 #예본안과 #종로예본란과 #예본안과의원 #예번안거ㅏ라섹후기 #종로안","author":"얼렁뚱땅 체리","kind":"exp"}],"s-dental-6":[{"src":"blog","title":"[더와이즈치과] 일본에서 임플란트 하지마세요 + 식립 한달 후기(해....","url":"https://blog.naver.com/marukoblog/223951623567","date":"2025-07-29","snippet":"(누군지는 오픈 안할꼬야)  더와이즈치과병원의 주요 장점 (광고 아니고요~) 1.치과 전 분야의 전문의 상주 & 협진 시스템 •보철, 교정, 치주, 구강악안면외과 등 각 분야의 보건복지부 인증 전문","author":"가나자와 라이프에서 삿포로 생활에","kind":"exp"}],"s-dental-8":[{"src":"blog","title":"[강남 미니쉬치과] 결혼식 직전 급하게 한 미니쉬, 7년이 지난 지금 ....","url":"https://blog.naver.com/skrwlghfhd/224454305970","date":"2026-10-26","snippet":"오늘은 제가 정말 오래전부터 꼭 써보고 싶었던 7년 전 강남 미니쉬치과병원에서 미니쉬 시술받았던... 평생 후회할 것 같다는 생각이 들었습니다. 하지만 시간이 너무 촉박해서 일반적인 치아 교정은 엄","author":"목포김근호해물한정식 Season2.'김근호' 목포를담다.","kind":"exp"}],"s-dental-9":[{"src":"blog","title":"[서울대학교 치과병원 양악 핀제거 수술 후기] 2. 핀 제거 수술 당일 ....","url":"https://blog.naver.com/ello_o5/224438411460","date":"2026-10-12","snippet":"어차피 다 액체로 된 음식들뿐이지만,, 그것조차 귀한 치과병원 입원환자다.. ㅎ 누워서 고통을 견디고... 그리고 오늘의 브로콜리 미음은 진짜 최악이었다.. 어제저녁부터 이번 병원밥 대실패임 ㅠㅠ ","author":"모양으로 채운 하루","kind":"exp"}],"s-dental-27":[{"src":"blog","title":"루시드 치과에서 라미네이트 후기","url":"https://blog.naver.com/hky33733/223266573980","date":"2023-11-16","snippet":"이곳은 의사분들이 5~6명쯤 모여서 여러 원장님들로 구성된 의원으로... 살짝 후회도 되더라.한달정도 지난 지금도 앞니 6개를 붙인곳은... #루시드치과 #언주역 #치과 #유료주차장 #언주역유료주차","author":"괜찮아서 그냥 가려고","kind":"exp"}],"s-dental-39":[{"src":"blog","title":"신사역 치아미백 내돈내산 후기 | 레브치과 원데이 치아미백 3회차 ....","url":"https://blog.naver.com/jeje_lifes2/224397640380","date":"2026-09-01","snippet":"라미는 하고 나면 이가 많이 깎여서 효과는 좋지만 후회한다는 후기를 많이 봤는데 레브치과는 무삭제 라미네이트도 가능하더라고요 외에도 치아교정, 임플란트 쪽으로도 원장님들이 분과별로 특화되어 있는..","author":"지ㅎㅖ로운 하루","kind":"exp"}],"s-dental-54":[{"src":"blog","title":"강남역 치아미백 뉴엔치과의원 내돈내산 후기 (미백2회)","url":"https://blog.naver.com/shk8030/223777257624","date":"2025-02-28","snippet":"후회함 뉴엔치과의원은 송곳니 옆 어금니까지 미백이 진행됨 치아가 시렵지 않나요? -> 솔직히 조콤? 시렵기도하고 진료 후 몇시간도 갑자기..시려운 통증이 옴 하지만 못참을 정도는 아니니 걱정 노! ","author":"혤리의 daily","kind":"exp"}]};
+const EXT_YM="2026.10.27";
+const SRC_L={blog:"블로그",cafe:"카페",news:"뉴스"};
+function extCard(x){
+  const list=EXT[x.id]||[];
+  const item=e=>`<li style="padding-block:10px;display:grid;gap:3px"><div class="row"><span class="badge ${e.kind==="neg"?"pend":"plain"}">${e.kind==="neg"?"불만·피해":"경험담"}</span><span class="badge plain">${SRC_L[e.src]||esc(e.src)}</span><span class="src">${esc(e.date||"날짜 미표기")}${e.author?" · "+esc(e.author):""}</span></div><a href="${esc(e.url)}" target="_blank" rel="noopener nofollow" style="font-weight:600">${esc(e.title)}</a>${e.snippet?`<span class="fine">${esc(e.snippet)}…</span>`:""}</li>`;
+  const neg=list.filter(e=>e.kind==="neg"),exp=list.filter(e=>e.kind!=="neg");
+  const group=(t,arr)=>arr.length?`<h3 class="eyebrow" style="margin:10px 0 0">${t} <span class="num">${arr.length}</span></h3><ul class="rank">${arr.map(item).join("")}</ul>`:"";
+  const body=list.length?group("불만·피해·재수술",neg)+group("내돈내산 경험담",exp)
+    :`<div class="empty" style="padding:20px 10px"><p class="fine">네이버 블로그·카페·뉴스에서 이 병원명이 제목에 들어간 불만·피해·경험 글을 찾지 못했습니다. (${EXT_YM} 검색)</p></div>`;
+  return `<section class="card"><div class="card-h"><h2>외부 글</h2><span class="src">네이버 검색 · ${EXT_YM} 수집 · 운영자 검토</span></div>
+    <div class="card-b">${body}
+    <div class="disclaimer" style="margin-top:8px"><b>외부 글 게시 원칙</b><span>본문은 옮기지 않고 제목·출처·날짜·링크만 보여줍니다. 병원명이 글에 명시된 경우만 포함합니다. 각 글은 작성자의 주장이며 소중한 내몸이 사실 여부를 확인하지 않았습니다. 병원은 정정·삭제를 요청할 수 있습니다.</span></div></div></section>`;
+}
+function doctorCard(x){
+  if(!x.h)return pending("의료진 정보","심평원 병원정보서비스","심평원 정보와 병원명이 자동으로 매칭되지 않았습니다. 운영자 확인 후 반영됩니다.");
+  const sp=Object.entries(x.h.spec).sort((a,b)=>b[1]-a[1]);
+  return `<section class="card"><div class="card-h"><h3>의료진</h3><span class="src">심평원 · ${HIRA_YM} 조회</span></div>
+    <div class="card-b" style="padding-top:12px"><div class="facts"><span>의사 <b class="num">${x.h.dr}</b>명</span><span>전문의 <b class="num">${x.h.sdr}</b>명</span>${x.h.est?`<span>개설 <b class="num">${estF(x.h.est)}</b></span>`:""}</div>
+    ${sp.length?`<div class="tablewrap" style="margin-top:8px"><table><thead><tr><th>전문과목</th><th class="r">전문의</th></tr></thead><tbody>${sp.map(([k,v])=>`<tr><td>${esc(k)}</td><td class="r num">${v}</td></tr>`).join("")}</tbody></table></div>`:""}
+    <p class="fine" style="margin-top:8px">의료진 변동은 매월 조회 결과를 쌓아 비교할 예정입니다.</p>${x.h.url?`<p class="fine">홈페이지: <a href="${esc(/^https?:/.test(x.h.url)?x.h.url:"http://"+x.h.url)}" target="_blank" rel="noopener">${esc(x.h.url)}</a></p>`:""}</div></section>`;
+}
+function priceCard(x){
+  const pr=x.h?Object.entries(x.h.price):[];
+  if(!pr.length)return pending("비급여 가격","심평원 비급여진료비정보",x.h&&/의원/.test(x.h.cl)?"심평원 오픈 API는 병원급 가격만 제공해 의원급은 아직 연동되지 않았습니다. 심평원 홈페이지의 ‘비급여 진료비 정보’에서 직접 확인할 수 있습니다.":"공개된 라섹·라식·임플란트 가격 정보가 없습니다.");
+  return `<section class="card"><div class="card-h"><h3>비급여 가격</h3><span class="src">심평원 · ${HIRA_YM} 조회</span></div>
+    <div class="tablewrap"><table><thead><tr><th>항목</th><th class="r">이 병원</th><th class="r">서울 병원급 중앙값</th></tr></thead><tbody>
+    ${pr.map(([k,v])=>`<tr><td>${k}<div class="src">비교 병원 ${HIRA.cnt[k]}곳</div></td><td class="r num">${v[0]===v[1]?wonF(v[0]):wonF(v[0])+"<br>~ "+wonF(v[1])}</td><td class="r num">${wonF(HIRA.med[k])}</td></tr>`).join("")}</tbody></table></div>
+    <div class="card-b" style="padding-top:8px"><p class="fine">같은 항목에 여러 가격이 등록된 경우(장비·재료별) 최저~최고로 표시했습니다. 비교 병원 수가 적어 참고용입니다.</p></div></section>`;
+}
+function realView(id){
+  S.current=id;
+  const x=REAL_BY_ID[id];const rs=pubReviews(id).sort((a,b)=>a.rating-b.rating);
+  const rank=REAL.filter(y=>y.type===x.type).sort((a,b)=>b.m-a.m).findIndex(y=>y.id===id)+1;
+  return `<div class="two">
+  <div style="display:grid;gap:20px;min-width:0">
+    <section class="card">
+      <div class="dhead"><a href="#list" class="src">← 병원 목록</a><h1>${esc(x.name)}</h1>
+        <div class="facts"><span>${TYPE[x.type]} · ${x.h?esc(x.h.cl):esc(x.kind)}</span><span>${esc(x.h?x.h.addr:(x.road||("서울특별시 "+x.gu)))}</span>${x.h?`<span>개설 <b class="num">${estF(x.h.est)}</b></span><span>의사 <b class="num">${x.h.dr}</b>명</span>`:""}</div></div>
+      <div class="score"><div><div class="big" style="color:var(--faint)">–<small>/100</small></div></div>
+        <div><div class="row"><span class="badge plain">산출 전</span><span class="src">주의 신호 지수</span></div>
+        <p class="fine" style="margin-top:6px">국민연금·심평원 데이터는 반영되어 있습니다. 직원·의사 수 변동은 월별 기록이 3개월 이상 쌓이면, 판결 이력과 인증 후기는 검증 체계가 갖춰지면 지수에 합산됩니다.</p></div></div>
+    </section>
+    <section class="card"><div class="card-h"><h2>국민연금 가입 사업장 정보</h2><span class="src">국민연금공단 · ${NPS_YM} · 실제 데이터</span></div>
+      <div class="tablewrap"><table><tbody>
+        <tr><th>직원 수(가입자)</th><td class="num">${x.m}명 · 서울 ${TYPE[x.type]} 중 ${rank}위</td></tr>
+        <tr><th>당월 신규 취득</th><td class="num">${x.j}명</td></tr>
+        <tr><th>당월 자격 상실</th><td class="num ${x.l>x.j?"up":""}">${x.l}명 (인원 대비 ${(x.l/x.m*100).toFixed(1)}%)</td></tr>
+        <tr><th>국민연금 가입일</th><td class="num">${x.since.replaceAll("-",".")}</td></tr>
+        <tr><th>사업장 형태</th><td>${x.f}</td></tr>
+      </tbody></table></div>
+      <div class="card-b" style="padding-top:10px"><details class="lim"><summary>이 정보가 의미하지 않는 것</summary>개인사업자인 대표원장과 4대보험 미가입 인력은 집계되지 않습니다. 한 달치 입·퇴사는 계절 요인의 영향을 받으므로, 12개월 회전율은 월별 자료를 누적한 뒤 산출합니다.</details></div></section>
+    <section class="card"><div class="card-h"><h2>인증 후기</h2><span class="src">부정 후기 우선</span></div>
+      <div class="card-b">${rs.length?rs.map(r=>reviewHTML(r,false)).join(""):`<div class="empty">아직 후기가 없습니다. 이 병원에서 진료받으셨다면 첫 후기를 남겨 주세요.</div>`}</div></section>
+    ${extCard(x)}
+  </div>
+  <aside style="display:grid;gap:20px;min-width:0">
+    ${doctorCard(x)}
+    ${priceCard(x)}
+    ${pending("판결·분쟁 이력","공개 판결문","판결문은 비실명 처리되어 병원을 자동으로 특정하기 어렵습니다. 이용자가 사건번호를 제보하면 운영자가 판결서를 직접 확인한 뒤, 확정 판결만 게시할 예정입니다.")}
+    <div class="disclaimer"><b>정보에 오류가 있나요?</b><span>병원은 근거 자료와 함께 무료로 정정을 요청할 수 있습니다.</span><button class="btn sm" data-fix="${id}" style="justify-self:start;margin-top:4px">데이터 정정 요청</button></div>
+  </aside></div>`;
+}
+
+/* ---------- 뷰: 병원 상세 ---------- */
+function sparkline(arr){
+  const w=320,hgt=84,p=8,min=Math.min(...arr)-1,max=Math.max(...arr)+1;
+  const x=i=>p+i*(w-2*p)/(arr.length-1),y=v=>hgt-p-(v-min)/(max-min)*(hgt-2*p);
+  const pts=arr.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+  const last=arr.length-1;
+  return `<svg class="spark" viewBox="0 0 ${w} ${hgt}" preserveAspectRatio="none" role="img" aria-label="최근 12개월 인원 ${arr[0]}명에서 ${arr[last]}명">
+    ${[0.25,0.5,0.75].map(f=>`<line x1="${p}" x2="${w-p}" y1="${p+f*(hgt-2*p)}" y2="${p+f*(hgt-2*p)}" stroke="var(--line)" stroke-width="1"/>`).join("")}
+    <polygon points="${p},${hgt-p} ${pts} ${w-p},${hgt-p}" fill="var(--navy-soft)"/>
+    <polyline points="${pts}" fill="none" stroke="var(--navy)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+    <circle cx="${x(last)}" cy="${y(arr[last])}" r="3.5" fill="var(--navy)"/></svg>`;
+}
+function replyHTML(p){const open=S.expanded.has(p.id);const long=p.body.length>p.summary.length;
+  return `<div class="reply ${p.author_type==="author"?"author":""}"><span class="who">${p.author_type==="hospital"?"병원 반론":"작성자 답변"}</span><span>${esc(open?p.body:p.summary)}</span>${long?`<button class="linkbtn" data-expand="${p.id}">${open?"접기":"전체 반론 보기"}</button>`:""}</div>`}
+function reviewHTML(r,admin){
+  const ok=admin||canRead(r.id);const rp=repliesOf(r.id);const replied=rp.some(p=>p.author_type==="hospital");
+  return `<article class="rv">
+    <div class="rv-head"><span class="stars" aria-label="별점 ${r.rating}점">${stars(r.rating)}</span>
+      ${r.status==="pending"?`<span class="badge pend">검토 중</span>`:r.verified?`<span class="badge ver">진료확인 인증 · ${r.procedure_month.replace("-",".")} 시술</span>`:`<span class="badge plain">미인증</span>`}
+      <span class="badge plain">${esc(r.item)}</span></div>
+    <div class="rv-title">${esc(r.title)}</div>
+    ${r.keywords.length?`<div class="kw">${r.keywords.map(k=>`<span>${esc(k)}</span>`).join("")}</div>`:""}
+    <div class="rv-body ${ok?"":"locked"}"><p>${esc(r.body)}</p>
+      ${ok?"":`<div class="unlock"><button class="btn sm" data-ad="${r.id}">광고 보고 열람</button><button class="btn sm primary" data-paywall="1">열람권 보기</button></div>`}</div>
+    ${rp.map(replyHTML).join("")}
+    <div class="rv-actions">${admin?(replied?`<span class="fine">반론 작성 완료</span>`:`<button class="btn sm primary" data-reply="${r.id}">반론 작성</button>`):`<button class="btn sm ghost" data-report="${r.id}">신고</button>`}</div>
+  </article>`;
+}
+function hospView(id){
+  S.current=id;
+  const h=DB.hospitals.find(x=>x.id===id),m=metrics(h);
+  const rs=[...m.rs,...pubReviews(id).filter(r=>r.status==="pending")].sort((a,b)=>a.rating-b.rating||(b.verified-a.verified));
+  const tagTxt={final:"판결 확정",pending:"진행 중 · 확정 전",settled:"조정 성립"};
+  const delta=h.staff[h.staff.length-1]-h.staff[0];
+  return `<div class="two">
+  <div style="display:grid;gap:20px;min-width:0">
+    <section class="card">
+      <div class="dhead">
+        <a href="#list" class="src">← 병원 목록</a>
+        <h1>${esc(h.name)} <span class="badge plain" style="vertical-align:middle">예시 · 가상 병원</span></h1>
+        <div class="facts"><span>${TYPE[h.type]}</span><span>${esc(h.region)}</span><span>개설 <b class="num">${h.opened.replace("-",".")}</b></span><span>전문의 <b class="num">${h.specialists}</b>명</span><span>최근 인원 <b class="num">${h.staff[h.staff.length-1]}</b>명</span></div>
+      </div>
+      <div class="score">
+        <div><div class="big">${m.score}<small>/100</small></div></div>
+        <div><div class="row">${sigTag(m.level)}<span class="src">주의 신호 지수 · 5개 지표 합산</span></div>
+          <div class="gauge" aria-hidden="true"><i style="left:${m.score}%"></i></div>
+          <div class="gauge-l"><span>0 낮음</span><span>30 확인 필요</span><span>60 주의</span><span>100</span></div></div>
+      </div>
+    </section>
+
+    <section class="card"><div class="card-h"><h2>지표별 근거</h2><span class="src">각 지표의 출처와 한계를 함께 표시합니다</span></div>
+      <div class="card-b"><ul class="comp">${m.comps.map(c=>`<li>
+        <div class="row1"><b>${c.name}</b><span class="src">${c.src}</span><span class="pts">${c.pts} / ${c.max}</span></div>
+        <div class="minibar"><i style="width:${c.pts/c.max*100}%"></i></div>
+        <div class="ex">${esc(c.val)}</div>
+        <details class="lim"><summary>이 지표가 의미하지 않는 것</summary>${esc(c.lim)}</details>
+      </li>`).join("")}</ul></div></section>
+
+    <section class="card"><div class="card-h"><h2>비급여 가격</h2><span class="src">심평원 비급여 진료비용 · 2026.09 (예시)</span></div>
+      <div class="tablewrap"><table><thead><tr><th>항목</th><th class="r">이 병원</th><th class="r">${esc(h.region)} 평균</th><th class="r">차이</th></tr></thead>
+      <tbody>${m.priceRows.map(r=>`<tr><td>${r.item}</td><td class="r num">${won(r.p)}</td><td class="r num">${won(r.avg)}</td><td class="r num ${r.dev>0?"up":"down"}">${r.dev>0?"+":""}${r.dev}%</td></tr>`).join("")}</tbody></table></div></section>
+
+    <section class="card"><div class="card-h"><h2>인증 후기</h2><span class="src">부정 후기 우선 · 별점·제목·키워드는 무료</span></div>
+      <div class="card-b">${rs.length?rs.map(r=>reviewHTML(r,false)).join(""):`<div class="empty">아직 후기가 없습니다. 이 병원에서 진료받으셨다면 첫 후기를 남겨 주세요.</div>`}</div></section>
+  </div>
+
+  <aside style="display:grid;gap:20px;min-width:0">
+    <section class="card"><div class="card-h"><h3>인원 추이 (12개월)</h3><span class="src">국민연금 가입 사업장</span></div>
+      <div class="card-b" style="padding-top:12px">${sparkline(h.staff)}
+        <div class="facts" style="margin-top:8px"><span>입사 <b class="num">${h.joins}</b></span><span>퇴사 <b class="num">${h.leaves}</b></span><span>순증감 <b class="num ${delta<0?"up":""}">${delta>0?"+":""}${delta}</b></span><span>회전율 <b class="num">${m.turnover}%</b></span></div></div></section>
+    <section class="card"><div class="card-h"><h3>판결·분쟁 이력</h3><span class="src">공개 판결문</span></div>
+      <div class="card-b" style="padding-top:12px">${m.cs.length?`<div class="cases">${m.cs.map(c=>`<div class="case"><span class="tag ${c.status}">${tagTxt[c.status]}</span><span>${esc(c.summary)}</span><span class="src">${esc(c.court)} ${esc(c.case_no)}</span></div>`).join("")}</div><p class="fine" style="margin-top:8px">개인정보를 가려 요약했습니다. 확정 전 사건은 결과가 바뀔 수 있습니다.</p>`:`<p class="fine">확인된 공개 판결·분쟁 이력이 없습니다.</p>`}</div></section>
+    <div class="disclaimer"><b>지표에 오류가 있나요?</b><span>병원은 근거 자료와 함께 무료로 정정을 요청할 수 있습니다.</span><button class="btn sm" data-fix="${h.id}" style="justify-self:start;margin-top:4px">데이터 정정 요청</button></div>
+  </aside></div>`;
+}
+
+/* ---------- 뷰: 지표 설명 ---------- */
+function methodView(){
+  const rows=[["비급여 가격 편차","25","심평원 비급여 진료비용","항목별 (병원 가격 − 지역 평균) ÷ 지역 평균 중 최댓값. +20% 이상이면 만점","반기"],
+    ["직원 회전율","25","국민연금 가입 사업장","최근 12개월 퇴사자 ÷ 월평균 가입자. 30% 이하 0점, 80% 이상 만점","월"],
+    ["의사 수 변동","15","심평원 병원정보서비스","월별 조회 결과를 쌓아 최근 12개월 의사·전문의 수 변동 폭으로 산출","월"],
+    ["판결·분쟁 이력","15","공개 판결문","확정 9점, 조정 성립 5점, 진행 중 3점","수시"],
+    ["인증 후기 부정 비율","20","이용자 인증 후기","진료확인 인증 후기 중 별점 2점 이하 비율. 3건 미만이면 가중치 절반","실시간"]];
+  return `<section class="hero"><span class="eyebrow">지표 설명</span><h1>주의 신호 지수는 이렇게 계산합니다</h1>
+    <p>다섯 개 지표를 합산해 0~100점으로 표시합니다. 0~29점은 낮음, 30~59점은 확인 필요, 60점 이상은 주의입니다.</p></section>
+  <section class="card"><div class="tablewrap"><table><thead><tr><th>지표</th><th class="r">배점</th><th>출처</th><th>산식</th><th>갱신 주기</th></tr></thead>
+    <tbody>${rows.map(r=>`<tr><td><b>${r[0]}</b></td><td class="r num">${r[1]}</td><td>${r[2]}</td><td style="white-space:normal;min-width:260px">${r[3]}</td><td>${r[4]}</td></tr>`).join("")}</tbody></table></div></section>
+  <section class="prose">
+    <h2>이 지수가 말하지 않는 것</h2>
+    <p>주의 신호 지수는 진료 결과나 의료진의 실력을 평가하지 않습니다. 가격이 높은 이유는 장비, 보증 범위, 사후관리 포함 여부일 수 있고, 직원 회전율은 업계 평균과 병원 규모의 영향을 받습니다.</p>
+    <p>지수가 높은 병원이라면 상담할 때 비용에 포함된 범위, 담당 의료진이 바뀔 가능성, 부작용이 생겼을 때의 대응 절차를 문서로 확인해 보세요.</p>
+    <h2>데이터 정정과 반론</h2>
+    <p>병원은 지표 오류에 대해 근거 자료와 함께 정정을 요청할 수 있고, 후기에는 1건당 1회 반론을 남길 수 있습니다. 모두 무료이며, 병원이 내는 어떤 비용도 지수와 후기의 노출·순위·삭제에 영향을 주지 않습니다.</p>
+  </section>`;
+}
+
+/* ---------- 뷰: 병원 관리자 ---------- */
+function adminView(){
+  const h=DB.hospitals.find(x=>x.id===S.admin),m=metrics(h);
+  const rs=pubReviews(h.id).sort((a,b)=>a.rating-b.rating);
+  const waiting=rs.filter(r=>!repliesOf(r.id).some(p=>p.author_type==="hospital")).length;
+  return `<section class="hero"><span class="eyebrow">병원 관리자 (데모)</span><h1>${esc(h.name)} 관리</h1>
+    <p>실제 서비스에서는 사업자등록증과 의료기관 개설신고증을 확인한 뒤 계정을 발급합니다. 데모에서는 아래에서 병원을 골라 보세요.</p>
+    <div style="max-width:320px"><label class="lbl" for="adminSel">병원 선택</label><select id="adminSel">${DB.hospitals.map(x=>`<option value="${x.id}" ${x.id===S.admin?"selected":""}>${esc(x.name)}</option>`).join("")}</select></div></section>
+  <div class="grid3">
+    <section class="card"><div class="card-h"><h3>주의 신호 지수</h3></div><div class="card-b" style="padding-top:12px"><div class="row"><span class="num" style="font-size:28px;font-weight:600">${m.score}</span>${sigTag(m.level)}</div><button class="btn sm" data-fix="${h.id}" style="margin-top:10px">데이터 정정 요청</button></div></section>
+    <section class="card"><div class="card-h"><h3>반론 대기 후기</h3></div><div class="card-b" style="padding-top:12px"><span class="num" style="font-size:28px;font-weight:600">${waiting}</span><span class="src"> 건</span><p class="fine">반론은 무료이며 후기 1건당 1회 작성할 수 있습니다.</p></div></section>
+    <section class="card"><div class="card-h"><h3>병원 대시보드</h3><span class="src">유료 · 출시 예정</span></div><div class="card-b" style="padding-top:12px"><p class="fine">신규 후기 알림, 익명 키워드 분석, 지역 평균 대비 통계를 월 구독으로 제공할 예정입니다. 구독 여부는 지수와 후기 노출에 영향을 주지 않습니다.</p></div></section>
+  </div>
+  <section class="card"><div class="card-h"><h2>우리 병원 후기</h2><span class="src">반론 기준: 목록 요약 50자, 본문 500자 이내</span></div>
+    <div class="card-b">${rs.length?rs.map(r=>reviewHTML(r,true)).join(""):`<div class="empty">아직 후기가 없습니다.</div>`}</div></section>`;
+}
+
+/* ---------- 모달 ---------- */
+function openModal(html,mount){$("#modalRoot").innerHTML=`<div class="scrim" data-scrim="1"><div class="modal" role="dialog" aria-modal="true">${html}</div></div>`;
+  const m=$("#modalRoot .modal");mount&&mount(m);const f=m.querySelector("input,textarea,select,button");f&&f.focus()}
+function closeModal(){$("#modalRoot").innerHTML=""}
+function paywall(){openModal(`<h3>후기 본문 열람</h3>
+  <p class="fine" style="font-size:13px">공공데이터 지표, 별점·제목·키워드, 판결 요약은 모두 무료입니다. 인증 후기 본문은 아래 방법으로 열람할 수 있습니다.</p>
+  <div class="plans">
+    <button class="plan" data-buy="ad"><b>광고 보고 열람</b><span class="price">무료</span><span class="d">광고 1회(5초)당 후기 3건</span></button>
+    <button class="plan best" data-buy="30d"><b>30일 집중 열람권</b><span class="price">9,900원</span><span class="d">수술 전 비교 기간용 · 모든 후기 무제한</span></button>
+    <button class="plan" data-buy="life"><b>평생 열람권 (얼리버드 한정)</b><span class="price">29,900원</span><span class="d">초기 가입자 한정 판매</span></button>
+  </div>
+  <p class="fine">결제 후 7일 이내 열람 이력이 없으면 전액 환불됩니다. 자동 결제는 없습니다. (데모: 실제 결제되지 않음)</p>
+  <div class="row" style="justify-content:flex-end"><button class="btn ghost" data-close="1">닫기</button></div>`)}
+function adFlow(rid){openModal(`<h3>광고 시청</h3><div class="ad"><span>광고 영역 (예시)</span><b id="adSec">5</b><span>초 후 후기 3건이 열립니다</span></div>
+  <div class="row" style="justify-content:flex-end"><button class="btn ghost" data-close="1">취소</button></div>`,()=>{
+  let n=5;const t=setInterval(()=>{const el=$("#adSec");if(!el){clearInterval(t);return}el.textContent=--n;
+    if(n<=0){clearInterval(t);if(!S.pass.type)S.pass={type:"ad"};
+      const pool=[rid,...pubReviews(S.current).sort((a,b)=>a.rating-b.rating).map(r=>r.id)].filter((id,i,a)=>id&&!S.unlocked.has(id)&&a.indexOf(id)===i);
+      pool.slice(0,3).forEach(id=>S.unlocked.add(id));closeModal();toast("후기 3건이 열렸습니다.");route()}},1000)})}
+function buy(t){if(t==="ad"){closeModal();const f=pubReviews(S.current||"h1").find(r=>!canRead(r.id));adFlow(f&&f.id);return}
+  S.pass={type:t};closeModal();toast(t==="30d"?"30일 열람권이 적용되었습니다. (데모)":"평생 열람권이 적용되었습니다. (데모)");route()}
+
+const BANNED=["사기","돌팔이","살인","쓰레기","미친","병신","도둑"];
+function writeReview(){
+  const cur=S.current||REAL[0].id;
+  openModal(`<h3>후기 쓰기</h3><form id="wForm" style="display:grid;gap:12px" novalidate>
+    <div class="g2"><div><label class="lbl" for="wH">병원</label><select id="wH"><optgroup label="서울 실제 병원">${REAL.map(h=>`<option value="${h.id}" ${h.id===cur?"selected":""}>${esc(h.name)} (${esc(h.gu)})</option>`).join("")}</optgroup><optgroup label="예시 병원">${DB.hospitals.map(h=>`<option value="${h.id}" ${h.id===cur?"selected":""}>${esc(h.name)}</option>`).join("")}</optgroup></select></div>
+      <div><label class="lbl" for="wI">시술 항목</label><select id="wI"></select></div></div>
+    <div class="g2"><div><label class="lbl" for="wM">시술 시기</label><input type="month" id="wM" value="2025-10"></div>
+      <div><label class="lbl" for="wR">별점</label><select id="wR">${[1,2,3,4,5].map(n=>`<option value="${n}">${stars(n)} ${n}점</option>`).join("")}</select></div></div>
+    <div><label class="lbl" for="wT">제목</label><input type="text" id="wT" maxlength="40" placeholder="예: 수술 6개월째 야간 빛번짐이 그대로예요"></div>
+    <div><span class="lbl">문제 키워드</span><div class="chips" id="wK"></div></div>
+    <div><label class="lbl" for="wB">내용</label><textarea id="wB" maxlength="1000" placeholder="언제, 어떤 설명을 들었고, 실제로 어떤 일이 있었는지 사실 위주로 적어 주세요."></textarea><div class="counter" id="wBc">0 / 1000</div></div>
+    <div id="wAlert" class="alert" hidden></div>
+    <div><label class="lbl" for="wF">진료확인 인증 (선택)</label><input type="file" id="wF" accept="image/*,.pdf">
+      <p class="fine" style="margin-top:4px">영수증·진료확인서로 실제 진료 여부만 확인합니다. 인증이 끝나면 파일은 즉시 파기되며 병원에 제공되지 않습니다.</p></div>
+    <div class="checks"><label><input type="checkbox" id="c1">직접 경험한 사실 위주로 작성했습니다.</label>
+      <label><input type="checkbox" id="c2">욕설·단정적 비방, 의료진 실명을 쓰지 않았습니다.</label>
+      <label><input type="checkbox" id="c3">인증 자료의 민감정보(진료 정보) 처리에 동의합니다. (인증 시)</label></div>
+    <div class="row" style="justify-content:flex-end"><button type="button" class="btn ghost" data-close="1">취소</button><button type="submit" class="btn primary">등록 요청</button></div>
+  </form>`,m=>{
+    const sel=new Set(),hS=m.querySelector("#wH"),iS=m.querySelector("#wI"),kB=m.querySelector("#wK");
+    const draw=()=>{const h=findH(hS.value);
+      if(!iS.dataset.t||iS.dataset.t!==h.type){iS.innerHTML=ITEMS[h.type].map(i=>`<option>${i}</option>`).join("");iS.dataset.t=h.type}
+      kB.innerHTML=KEYWORDS[h.type].map(k=>`<button type="button" class="chip" data-kw="${esc(k)}" aria-pressed="${sel.has(k)}">${esc(k)}</button>`).join("")};
+    draw();hS.addEventListener("change",()=>{sel.clear();draw()});
+    kB.addEventListener("click",e=>{const b=e.target.closest("[data-kw]");if(!b)return;sel.has(b.dataset.kw)?sel.delete(b.dataset.kw):sel.add(b.dataset.kw);draw()});
+    const body=m.querySelector("#wB"),al=m.querySelector("#wAlert"),tt=m.querySelector("#wT");
+    const check=()=>{m.querySelector("#wBc").textContent=`${body.value.length} / 1000`;const hit=BANNED.filter(w=>(tt.value+body.value).includes(w));
+      al.hidden=!hit.length;al.textContent=hit.length?`‘${hit.join("’, ‘")}’ 같은 표현은 명예훼손 분쟁의 원인이 됩니다. 겪은 사실로 바꿔 적어 주세요.`:"";return !hit.length};
+    body.addEventListener("input",check);tt.addEventListener("input",check);
+    m.querySelector("#wForm").addEventListener("submit",e=>{e.preventDefault();const t=tt.value.trim(),b=body.value.trim(),file=m.querySelector("#wF").files.length;
+      const fail=msg=>{al.hidden=false;al.textContent=msg};
+      if(!t||b.length<30)return fail("제목과 30자 이상의 내용을 입력해 주세요.");
+      if(!check())return;
+      if(!m.querySelector("#c1").checked||!m.querySelector("#c2").checked)return fail("작성 기준 두 항목에 확인해 주세요.");
+      if(file&&!m.querySelector("#c3").checked)return fail("인증 자료를 올리려면 민감정보 처리에 동의해 주세요.");
+      const r={id:"r"+Date.now(),hospital_id:hS.value,item:iS.value,rating:+m.querySelector("#wR").value,title:t,body:b,keywords:[...sel],procedure_month:m.querySelector("#wM").value||"2025-10",verified:false,status:"pending"};
+      DB.reviews.push(r);S.unlocked.add(r.id);closeModal();toast(file?"등록 요청되었습니다. 인증 확인 후 공개됩니다.":"등록 요청되었습니다. 검토 후 공개됩니다.");go("hosp-"+r.hospital_id)})})}
+function replyForm(rid){const r=DB.reviews.find(x=>x.id===rid);
+  openModal(`<h3>반론 작성</h3><div class="disclaimer"><b>${esc(r.title)}</b></div>
+  <form id="pForm" style="display:grid;gap:12px" novalidate>
+    <div><label class="lbl" for="pS">목록 요약 (50자 이내)</label><input type="text" id="pS" placeholder="후기 아래에 바로 보이는 한 줄입니다."><div class="counter" id="pSc">0 / 50</div></div>
+    <div><label class="lbl" for="pB">본문 (500자 이내)</label><textarea id="pB" placeholder="‘전체 반론 보기’를 누르면 보이는 내용입니다."></textarea><div class="counter" id="pBc">0 / 500</div></div>
+    <div class="checks"><label><input type="checkbox" id="q1">환자를 알아볼 수 있는 정보를 쓰지 않았습니다.</label>
+      <label><input type="checkbox" id="q2">진료 기록·검사 수치 등 진료 내용을 공개하지 않았습니다.</label>
+      <label><input type="checkbox" id="q3">작성자를 비방하거나 법적 조치를 압박하는 표현이 없습니다.</label></div>
+    <div id="pAlert" class="alert" hidden></div>
+    <p class="fine">반론은 무료이며 후기 1건당 1회 작성할 수 있습니다. 작성자는 반론에 1회 답변할 수 있습니다.</p>
+    <div class="row" style="justify-content:flex-end"><button type="button" class="btn ghost" data-close="1">취소</button><button type="submit" class="btn primary" id="pSubmit">반론 등록</button></div>
+  </form>`,m=>{const sI=m.querySelector("#pS"),bI=m.querySelector("#pB");
+    const upd=()=>{const sc=m.querySelector("#pSc"),bc=m.querySelector("#pBc");sc.textContent=`${sI.value.length} / 50`;bc.textContent=`${bI.value.length} / 500`;
+      sc.classList.toggle("over",sI.value.length>50);bc.classList.toggle("over",bI.value.length>500);m.querySelector("#pSubmit").disabled=sI.value.length>50||bI.value.length>500};
+    sI.addEventListener("input",upd);bI.addEventListener("input",upd);
+    m.querySelector("#pForm").addEventListener("submit",e=>{e.preventDefault();const al=m.querySelector("#pAlert"),sv=sI.value.trim(),bv=bI.value.trim();
+      if(!sv){al.hidden=false;al.textContent="목록 요약을 입력해 주세요.";return}
+      if(!["q1","q2","q3"].every(id=>m.querySelector("#"+id).checked)){al.hidden=false;al.textContent="작성 기준 세 항목을 모두 확인해 주세요.";return}
+      DB.replies.push({id:"p"+Date.now(),review_id:rid,author_type:"hospital",summary:sv,body:bv||sv});closeModal();toast("반론이 등록되었습니다.");route()})})}
+function reportForm(rid){const reasons=["사실과 다른 내용(허위사실)","개인정보 노출","욕설·비방","광고·홍보성 후기","실제 진료하지 않은 후기"];
+  openModal(`<h3>후기 신고</h3><form id="rForm" style="display:grid;gap:12px" novalidate>
+    <div class="checks">${reasons.map((x,i)=>`<label><input type="radio" name="rr" value="${i}" ${i?"":"checked"}>${x}</label>`).join("")}</div>
+    <div><label class="lbl" for="rD">상세 내용 (선택)</label><textarea id="rD" placeholder="권리침해 신고는 소명 자료와 함께 접수됩니다."></textarea></div>
+    <p class="fine">처리 절차: 접수 → 검토 → 필요 시 임시조치(최대 30일) → 작성자 이의제기 시 재게시 검토. 결과는 신고자와 작성자 모두에게 알립니다.</p>
+    <div class="row" style="justify-content:flex-end"><button type="button" class="btn ghost" data-close="1">취소</button><button type="submit" class="btn danger">신고 접수</button></div></form>`,m=>{
+    m.querySelector("#rForm").addEventListener("submit",e=>{e.preventDefault();DB.reports.push({target_type:"review",target_id:rid,reason:reasons[+m.querySelector("input[name=rr]:checked").value]});closeModal();toast("신고가 접수되었습니다. 검토 후 결과를 알려드립니다.")})})}
+function fixForm(hid){const h=findH(hid);
+  openModal(`<h3>데이터 정정 요청</h3><p class="fine" style="font-size:13px">${esc(h.name)}의 지표 중 사실과 다른 항목을 알려주세요. 근거 자료 확인 후 영업일 기준 5일 이내에 반영 여부를 안내합니다. 정정 요청은 무료입니다.</p>
+  <form id="fForm" style="display:grid;gap:12px" novalidate>
+    <div><label class="lbl" for="fT">지표</label><select id="fT"><option>비급여 가격</option><option>직원 회전율</option><option>의료진 변동</option><option>판결·분쟁 이력</option><option>병원 기본 정보</option></select></div>
+    <div><label class="lbl" for="fD">정정 내용</label><textarea id="fD" placeholder="예: 2026년 8월 비급여 가격을 변경해 심평원에 재신고했습니다."></textarea></div>
+    <div><label class="lbl" for="fF">근거 자료</label><input type="file" id="fF"></div>
+    <div class="row" style="justify-content:flex-end"><button type="button" class="btn ghost" data-close="1">취소</button><button type="submit" class="btn primary">요청 보내기</button></div></form>`,m=>{
+    m.querySelector("#fForm").addEventListener("submit",e=>{e.preventDefault();DB.reports.push({target_type:"metric",target_id:hid,reason:m.querySelector("#fT").value});closeModal();toast("정정 요청이 접수되었습니다.")})})}
+
+/* ---------- 이벤트 ---------- */
+document.addEventListener("click",e=>{
+  if(e.target.dataset.scrim||e.target.closest("[data-close]")){closeModal();return}
+  const pt=e.target.closest("[data-ptab]");if(pt){S.ptab=pt.dataset.ptab;route();return}
+  const c=e.target.closest("[data-go],[data-type],[data-hosp],[data-ad],[data-paywall],[data-buy],[data-expand],[data-reply],[data-report],[data-fix]");if(!c)return;const d=c.dataset;
+  if(d.go)go(d.go);
+  else if(d.type){S.type=d.type;S.ptab=null;route()}
+  else if(d.hosp)go("hosp-"+d.hosp);
+  else if(d.ad)adFlow(d.ad);
+  else if(d.paywall)paywall();
+  else if(d.buy)buy(d.buy);
+  else if(d.expand){S.expanded.has(d.expand)?S.expanded.delete(d.expand):S.expanded.add(d.expand);route()}
+  else if(d.reply)replyForm(d.reply);
+  else if(d.report)reportForm(d.report);
+  else if(d.fix)fixForm(d.fix);
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();if(e.key==="Enter"&&e.target.matches("tr[data-hosp]"))go("hosp-"+e.target.dataset.hosp)});
+document.addEventListener("submit",e=>{if(e.target.id==="searchForm"){e.preventDefault();S.q=$("#q").value;go("list")}});
+document.addEventListener("change",e=>{if(e.target.id==="adminSel"){S.admin=e.target.value;route()}});
+$("#passChip").addEventListener("click",paywall);
+$("#writeBtn").addEventListener("click",writeReview);
+addEventListener("hashchange",route);
+route();
+</script>

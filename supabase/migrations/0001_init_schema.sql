@@ -1,0 +1,2 @@
+-- 적용 완료 (2026-10-27). 병원·공공데이터·외부글·회원·후기·반론·신고 테이블과 RLS.
+-- 전체 SQL은 Supabase 프로젝트 sojunghan-naemom 의 migration 'init_schema' 와 동일합니다.
